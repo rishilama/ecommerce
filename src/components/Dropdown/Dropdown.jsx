@@ -24,15 +24,7 @@ const Dropdowns = () => {
           {/* ... add more items ... */}
         </div>
       </div>
-      <div className="dropdown">
-        <button className="dropbtn">Apparels</button>
-        <div className="dropdown-content">
-          {/* Add links or items for the Apparels dropdown */}
-          <Link to="/apparels">askl 1</Link>
-          <Link to="/apparels">ioi 2</Link>
-          {/* ... add more items ... */}
-        </div>
-      </div>
+      
       <div className="dropdown">
         <button className="dropbtn">Sale</button>
         <div className="dropdown-content">
