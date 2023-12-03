@@ -1,4 +1,20 @@
 /* src/components/Header.css */
+
+.parent-container{
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .parent-container {
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+}
+
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -55,7 +71,10 @@
     align-items: center;
   }
   
-  
+  .header-site-logo{
+    width: 50px;
+    height: auto;
+  }
 
 
   /* src/components/Dropdowns.css */
@@ -98,7 +117,7 @@
     position: fixed; /* Fixed positioning to cover the entire viewport */
     width: 90%; /* Take 90% of the website width */
     max-width: 500px; /* Add a max-width if needed */
-    top: 77px; /* Adjust the top position as needed */
+    top: 90px; /* Adjust the top position as needed */
     left: 50%; /* Center the dropdown horizontally */
     transform: translateX(-50%); /* Adjust to center the dropdown */
     background-color: #333;

@@ -6,7 +6,7 @@ import Dropdowns from '../Dropdown/Dropdown';
 
 const Header = () => {
   return (
-    <div>
+    <div className='parent-container'>
       <header className="header">
       <div className="left-section">
         <div className="customer-service">
@@ -18,13 +18,10 @@ const Header = () => {
       </div>
       <div className="center-section">
         <div className="logo">
-          <Link to="/">YourLogo</Link>
+          <Link to="/"><img src="/images/Sh-Logo.png" alt="header-site-logo" className='header-site-logo' /></Link>
         </div>
       </div>
       <div className="right-section">
-        <div className="sign-in">
-          <Link to="/sign-in">Welcome Back</Link>
-        </div>
         <div className="sign-in">
           <Link to="/sign-in">Become a sneakerhead</Link>
         </div>

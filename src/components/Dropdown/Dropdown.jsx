@@ -26,6 +26,16 @@ const Dropdowns = () => {
       </div>
       
       <div className="dropdown">
+        <button className="dropbtn">Unisex</button>
+        <div className="dropdown-content">
+          {/* Add links or items for the Men dropdown */}
+          <Link to="/men">hj 1</Link>
+          <Link to="/men">klk 2</Link>
+          {/* ... add more items ... */}
+        </div>
+      </div>
+      
+      <div className="dropdown">
         <button className="dropbtn">Sale</button>
         <div className="dropdown-content">
           {/* Add links or items for the Sale dropdown */}

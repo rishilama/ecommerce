@@ -19,7 +19,7 @@ const HamburgerHeader = () => {
         <div className="line"></div>
       </div>
       <div className="logo">
-        <Link to="/">Your Logo</Link>
+        <Link to="/"><img src="/images/Sh-Logo.png" alt="header-site-logo" className='header-site-logo' /></Link>
       </div>
       <div className="backdrop" onClick={toggleDropdown}></div>
       {showDropdown && <HamburgerDropdown />}

@@ -22,11 +22,10 @@ const App = () => {
     };
   }, []);
   return (
-    <Router>
+    <div className='parent_container'>
+      <Router>
       {isMobile ? <HamburgerHeader /> : <Header />}
-      {/* <Header />
-
-      <HamburgerHeader /> */}
+      
       {/* <Switch>
         <Route path="/products" component={ProductList} />
         <Route path="/about" component={About} />
@@ -35,7 +34,9 @@ const App = () => {
           <div>Welcome to Your App</div>
         </Route>
       </Switch> */}
-    </Router>
+      </Router>
+    </div>
+    
   );
 };
 
