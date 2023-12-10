@@ -1,11 +1,10 @@
 // src/App.js
-import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import HamburgerHeader from './components/Hamburger-header/Hamburger-header';
-// import ProductList from './pages/ProductList';
-// import About from './pages/About';
+import AllProductPage from './pages/All-Product-Page/AllProductPage';
+import HomePage from './pages/HomePage/HomePage';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -21,22 +20,19 @@ const App = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
   return (
-    <div className='parent_container'>
+    <div className="parent_container">
       <Router>
-      {isMobile ? <HamburgerHeader /> : <Header />}
-      
-      {/* <Switch>
-        <Route path="/products" component={ProductList} />
-        <Route path="/about" component={About} />
-        <Route path="/" exact>
-          Your home page component
-          <div>Welcome to Your App</div>
-        </Route>
-      </Switch> */}
+        {isMobile ? <HamburgerHeader /> : <Header />}
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
+        </Routes>
+
       </Router>
     </div>
-    
   );
 };
 

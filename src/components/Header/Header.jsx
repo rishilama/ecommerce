@@ -2,7 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css'; // Import the CSS file
-import Dropdowns from '../Dropdown/Dropdown';
+import Dropdown from '../Dropdown/Dropdown';
+import ProductItems from '../../data/ProductItems';
 
 const Header = () => {
   return (
@@ -34,7 +35,7 @@ const Header = () => {
         {/* Example: <input type="text" placeholder="Search" /> */}
       </div>
     </header>
-    <Dropdowns />
+    <Dropdown items={ProductItems} />
 
     </div>
   );

@@ -1,51 +1,50 @@
+//Dropdown.jsx
 // src/components/Dropdowns.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+const Dropdown = ({ items }) => {
+  const history = useNavigate();
 
-const Dropdowns = () => {
+  const handleItemClick = (gender, category, subcategory) => {
+    const newPath = `/${gender.toLowerCase()}/${category.toLowerCase()}/${subcategory.toLowerCase()}`;
+    history.push(newPath);
+  };
+
   return (
     <div className="dropdowns">
-      <div className="dropdown">
-        <button className="dropbtn">Ladies</button>
-        <div className="dropdown-content">
-          {/* Add links or items for the Ladies dropdown */}
-          <Link to="/ladies">asa 1</Link>
-          <Link to="/ladies">dd 2</Link>
-          {/* ... add more items ... */}
+      {items.map((item) => (
+        <div className="dropdown" key={item.name}>
+          <button className="dropbtn">{item.gender}</button>
+          <div className="dropdown-content">
+            {item.categories.map((category) => (
+              <div key={category.name} className='category_subcategory'>
+                <Link
+                  className='category'
+                  to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${category.subcategories[0].toLowerCase()}`}
+                  onClick={() => handleItemClick(item.gender, category.name, category.subcategories[0])}
+                >
+                  {category.name}
+                </Link>
+                <ul>
+                  {category.subcategories.map((subcategory) => (
+                    <li key={subcategory} className='subcategory-list'>
+                      <Link className='subcategory-link'
+                        to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
+                        onClick={() => handleItemClick(item.gender, category.name, subcategory)}
+                      >
+                        {subcategory}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="dropdown">
-        <button className="dropbtn">Men</button>
-        <div className="dropdown-content">
-          {/* Add links or items for the Men dropdown */}
-          <Link to="/men">hj 1</Link>
-          <Link to="/men">klk 2</Link>
-          {/* ... add more items ... */}
-        </div>
-      </div>
-      
-      <div className="dropdown">
-        <button className="dropbtn">Unisex</button>
-        <div className="dropdown-content">
-          {/* Add links or items for the Men dropdown */}
-          <Link to="/men">hj 1</Link>
-          <Link to="/men">klk 2</Link>
-          {/* ... add more items ... */}
-        </div>
-      </div>
-      
-      <div className="dropdown">
-        <button className="dropbtn">Sale</button>
-        <div className="dropdown-content">
-          {/* Add links or items for the Sale dropdown */}
-          <Link to="/sale">Category 1</Link>
-          <Link to="/sale">Category 2</Link>
-          {/* ... add more items ... */}
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
 
-export default Dropdowns;
+export default Dropdown;
