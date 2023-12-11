@@ -6,8 +6,10 @@ const ProductGrid = ({ gender, category, subcategory }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Fetch products based on the provided parameters
-    const fetchedProducts = ProductAPI.products[gender]?.[category]?.[subcategory] || [];
+    // Fetch all products of the selected category
+    const fetchedProducts = subcategory
+      ? ProductAPI.products[gender]?.[category]?.[subcategory] || []
+      : Object.values(ProductAPI.products[gender]?.[category] || {}).flat() || [];
     setProducts(fetchedProducts);
   }, [gender, category, subcategory]);
 

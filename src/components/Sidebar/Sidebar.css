@@ -12,4 +12,39 @@
         margin-right: auto;
     }
   }
+
+
+  .sidebar-gender ul {
+    list-style-type: none;
+  }
+
+
+  .sidebar-gender ul li {
+    margin-top: 5px;
+  }
+  
+  .subcategory{
+    margin-left: -10px;
+  }
+
+  .sidebarCategoryLink {
+    position: relative;
+    text-decoration: none;
+    color: #333; /* You can adjust the color as needed */
+  }
+  
+  .sidebarCategoryLink::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px; /* Adjust the thickness of the underline as needed */
+    background-color: #333; /* Use the same color as the text */
+    transition: width 0.3s ease; /* Add a transition effect to width */
+  }
+  
+  .sidebarCategoryLink:hover::before {
+    width: 100%;
+  }
   

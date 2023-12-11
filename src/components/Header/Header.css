@@ -171,3 +171,10 @@
     text-decoration: none;
     color: white;
   }
+
+  /* Dropdown.css */
+.category_subcategory .category {
+  cursor: pointer;
+}
+
+/* Add any additional styles you need */

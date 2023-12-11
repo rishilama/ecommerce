@@ -2,6 +2,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ProductItems from '../../data/ProductItems';
+import ProductAPI from '../../data/ProductAPI'; // Import the ProductAPI
+
+import './Sidebar.css';
 
 const Sidebar = ({ onSelectSubcategory }) => {
   const location = useLocation();
@@ -15,37 +18,53 @@ const Sidebar = ({ onSelectSubcategory }) => {
     );
   };
 
+  // Function to handle category click
+  const handleCategoryClick = (gender, category) => {
+    onSelectSubcategory(null); // Reset subcategory on category click
+
+    // Fetch and display all elements inside ProductAPI.gender.category dictionary
+    const categoryProducts = ProductAPI.products[gender]?.[category] || [];
+    console.log('Category Products:', categoryProducts);
+    // You can do something with the fetched products, like updating state or displaying them.
+  };
+
   return (
     <div className="sidebar parent-container">
-      {ProductItems.map((genderItem) => (
-        <div key={genderItem.gender} className="sidebar-gender">
-          <h3>{genderItem.gender}</h3>
-          <ul>
-            {genderItem.categories.map((category) => (
-              <li key={category.name} className={isCategoryOpen(genderItem.gender, category.name) ? 'active' : ''}>
-                <Link
-                  to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}`}
-                  onClick={() => onSelectSubcategory(null)} // Reset subcategory on category click
+      {ProductItems
+        .filter((genderItem) => currentPath.includes(genderItem.gender.toLowerCase()))
+        .map((genderItem) => (
+          <div key={genderItem.gender} className="sidebar-gender">
+            <ul>
+              {genderItem.categories.map((category) => (
+                <li
+                  key={category.name}
+                  className={isCategoryOpen(genderItem.gender, category.name) ? 'active' : ''}
                 >
-                  {category.name}
-                </Link>
-                <ul>
-                  {category.subcategories.map((subcategory) => (
-                    <li key={subcategory} className={currentPath[3] === subcategory.toLowerCase() ? 'active' : ''}>
-                      <Link
-                        to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
-                        onClick={() => onSelectSubcategory(subcategory)}
-                      >
-                        {subcategory}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+                  <Link
+                    className="sidebarCategoryLink"
+                    to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}`}
+                    onClick={() => handleCategoryClick(genderItem.gender, category.name)}
+                  >
+                    {category.name}
+                  </Link>
+                  <ul>
+                    {category.subcategories.map((subcategory) => (
+                      <li key={subcategory} className={currentPath[3] === subcategory.toLowerCase() ? 'active' : ''}>
+                        <Link
+                          className="sidebarCategoryLink subcategory"
+                          to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
+                          onClick={() => onSelectSubcategory(subcategory)}
+                        >
+                          {subcategory}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
     </div>
   );
 };

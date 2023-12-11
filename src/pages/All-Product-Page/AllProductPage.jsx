@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import ProductGrid from '../../components/ProductGrid/ProductGrid';
+import './AllProductPage.css'
 
 const AllProductPage = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
