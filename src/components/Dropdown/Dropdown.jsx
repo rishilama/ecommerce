@@ -30,9 +30,11 @@ const Dropdown = ({ items }) => {
           <div className="dropdown-content">
             {item.categories.map((category) => (
               <div key={category.name} className='category_subcategory'>
-                <span className='category' onClick={() => handleCategoryClick(item.gender, category.name)}>
+                <Link 
+                  to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}`}
+                  className='category' onClick={() => handleCategoryClick(item.gender, category.name)}>
                   {category.name}
-                </span>
+                </Link>
                 <ul>
                   {category.subcategories.map((subcategory) => (
                     <li key={subcategory} className='subcategory-list'>

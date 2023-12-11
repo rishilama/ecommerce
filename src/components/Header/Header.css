@@ -15,41 +15,20 @@
 }
 
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333; /* Add your desired background color */
-    color: #fff; /* Add your desired text color */
-  }
-  
-  .left-section,
-  .center-section,
-  .right-section {
-    display: flex;
-    align-items: center;
-  }
-  
-  .customer-service,
-  .newsletter,
-  .sign-in,
-  .cart {
-    text-decoration: none;
-    color: #fff; /* Add your desired text color */
-  }
   
   .right-section {
-    margin-left: auto; /* Move to the extreme right */
+    display: flex;
+    justify-content: flex-end;
   }
-  
+/*   
   .center-section {
     width: 100%;
     display: flex;
     justify-content: center;
-    flex: 1; /* Occupy remaining space, pushing logo to the center */
+    flex: 1;  
   }
+   */
   
- 
   
   /* Add more specific styling based on your design needs */
   
@@ -59,8 +38,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding: 10px; */
-    background-color: #333; /* Add your desired background color */
+    padding: 20px 0;
     color: #fff; /* Add your desired text color */
   }
   
@@ -69,7 +47,20 @@
   .right-section {
     display: flex;
     align-items: center;
+    width: 100%;
   }
+
+  .left-section .newsletter,
+  .right-section .cart{
+    margin-left: 20px;
+  }
+
+  .header-link{
+    text-decoration: none;
+    text-transform: lowercase;
+    color: black;
+  }
+  
   
   .header-site-logo{
     width: 50px;
@@ -116,7 +107,7 @@
     display: none;
     position: fixed; /* Fixed positioning to cover the entire viewport */
     width: 70%; /* Take 90% of the website width */
-    top: 90px; /* Adjust the top position as needed */
+    top: 130px; /* Adjust the top position as needed */
     left: 50%; /* Center the dropdown horizontally */
     transform: translateX(-50%); /* Adjust to center the dropdown */
     background-color: #333;

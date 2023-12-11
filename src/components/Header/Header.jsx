@@ -11,10 +11,10 @@ const Header = () => {
       <header className="header">
       <div className="left-section">
         <div className="customer-service">
-          <Link to="/customer-service">Customer Service</Link>
+          <Link className="header-link" to="/customer-service">Customer Service</Link>
         </div>
         <div className="newsletter">
-          <Link to="/newsletter">Newsletter</Link>
+          <Link className="header-link" to="/newsletter">Newsletter</Link>
         </div>
       </div>
       <div className="center-section">
@@ -24,10 +24,10 @@ const Header = () => {
       </div>
       <div className="right-section">
         <div className="sign-in">
-          <Link to="/sign-in">Become a sneakerhead</Link>
+          <Link className="header-link" to="/sign-in">Become a sneakerhead</Link>
         </div>
         <div className="cart">
-          <Link to="/cart">Cart</Link>
+          <Link className="header-link" to="/cart">Cart</Link>
         </div>
       </div>
       <div className="search-bar">
