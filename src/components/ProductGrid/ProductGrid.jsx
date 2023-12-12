@@ -1,6 +1,7 @@
 // ProductGrid.js
 import React, { useEffect, useState } from 'react';
 import ProductAPI from '../../data/ProductAPI';
+import './ProductGrid.css'
 
 const ProductGrid = ({ gender, category, subcategory }) => {
   const [products, setProducts] = useState([]);
@@ -13,18 +14,27 @@ const ProductGrid = ({ gender, category, subcategory }) => {
     setProducts(fetchedProducts);
   }, [gender, category, subcategory]);
 
+  console.log(products)
+
   return (
     <div className="product-grid">
-      <h2>Products</h2>
-      <ul>
+      <div className="card-container">
         {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ${product.price}
-          </li>
+          <div key={product.id} className="product-card">
+            <div className="single-product__image-container">
+              <img src={`/images/product_images/${product.picture}`} alt={product.name} className='product-image' />
+            </div>
+            <div className="product-details">
+              <h3>{product.name}</h3>
+              <p>${product.price}</p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
+
+
 
 export default ProductGrid;

@@ -14,5 +14,38 @@
   }
 
   .product-page{
-    display: flex;
+    padding-top: 18px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    gap: 0 10px;
+  }
+
+  .sidebar{
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+  .product-grid{
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+
+  
+  @media(max-width:1000px){
+    .product-page{
+      gap: 0px;
+    }
+    .sidebar{
+      display: none;
+      grid-column-start: 0;
+      grid-column-end: 0;
+    }
+
+    .product-grid{
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  
   }

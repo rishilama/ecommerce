@@ -41,11 +41,11 @@ const Sidebar = ({ onSelectSubcategory }) => {
                   className={isCategoryOpen(genderItem.gender, category.name) ? 'active' : ''}
                 >
                   <Link
-                    className="sidebarCategoryLink"
+                    className="sidebarCategoryLink categoryLink"
                     to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}`}
                     onClick={() => handleCategoryClick(genderItem.gender, category.name)}
                   >
-                    {category.name}
+                    {category.name.toLowerCase()}
                   </Link>
                   <ul>
                     {category.subcategories.map((subcategory) => (
@@ -55,7 +55,7 @@ const Sidebar = ({ onSelectSubcategory }) => {
                           to={`/${genderItem.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
                           onClick={() => onSelectSubcategory(subcategory)}
                         >
-                          {subcategory}
+                          {subcategory.toLowerCase()}
                         </Link>
                       </li>
                     ))}

@@ -1,0 +1,35 @@
+.card-container{
+    margin-top: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 40px 30px;
+}
+
+@media(max-width:768px){
+    .card-container{
+        grid-template-columns: repeat(2,auto);
+    }
+}
+
+@media(max-width:400px){
+    .card-container{
+        grid-template-columns: repeat(1,auto);
+    }
+}
+
+.single-product__image-container{
+    margin: auto;
+    width: 100%;
+  }
+  
+  .single-product__image-container img{
+    
+    width: 100%;
+    height: auto;
+  
+    object-fit: contain;
+    object-position: center;
+  
+    aspect-ratio: 1/1;
+  }

@@ -5,15 +5,15 @@ const ProductItems = [
     categories: [
       {
         name: 'Sneaker',
-        subcategories: ['Nike Air Max', 'Nike React', 'Nike Dunk', 'Jordan Retro', 'Jordan AJ1', 'Jordan AJ4'],
+        subcategories: ['Nike', 'Jordan', 'Dunk', 'Adidas', 'New Balance', 'Puma', 'Balenciaga', 'Converse', 'Vans', 'Asics', 'Under Armour'],
       },
       {
         name: 'Watches',
-        subcategories: ['Casio G-Shock', 'Casio Edifice', 'Casio Pro Trek'],
+        subcategories: ['Tag Heuer', 'Fossil', 'Tissot','Mont Blanc','Omega', 'Rolex', 'Armani Exchange', 'Emporio Armani'],
       },
       {
         name: 'Apparels',
-        subcategories: ['Hoodie Pullover', 'Hoodie Zip-up', 'Hoodie Graphic', 'Sweatshirt Crewneck', 'Sweatshirt Hooded'],
+        subcategories: ['Hoodie', 'Sweatshirt', 'Collar Sweatshit', 'Jacket', 'Jeans'],
       },
     ],
   },

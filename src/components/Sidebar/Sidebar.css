@@ -13,18 +13,26 @@
     }
   }
 
-
+  .sidebar{
+    background-color: aqua;
+  }
   .sidebar-gender ul {
     list-style-type: none;
+    margin-bottom: 50px;
+
   }
 
 
   .sidebar-gender ul li {
-    margin-top: 5px;
+    margin-top: 8px;
+  }
+
+  .categoryLink{
+    margin-left: -40px;
   }
   
   .subcategory{
-    margin-left: -10px;
+    margin-left: -60px;
   }
 
   .sidebarCategoryLink {
@@ -48,3 +56,7 @@
     width: 100%;
   }
   
+
+  .sidebar-gender ul li .categoryLink{
+    margin-top: 100px;
+  }

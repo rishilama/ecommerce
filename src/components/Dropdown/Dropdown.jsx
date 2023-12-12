@@ -33,7 +33,7 @@ const Dropdown = ({ items }) => {
                 <Link 
                   to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}`}
                   className='category' onClick={() => handleCategoryClick(item.gender, category.name)}>
-                  {category.name}
+                  {category.name.toLowerCase()}
                 </Link>
                 <ul>
                   {category.subcategories.map((subcategory) => (
@@ -42,7 +42,7 @@ const Dropdown = ({ items }) => {
                         to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
                         onClick={() => handleItemClick(`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`)}
                       >
-                        {subcategory}
+                        {subcategory.toLowerCase()}
                       </Link>
                     </li>
                   ))}

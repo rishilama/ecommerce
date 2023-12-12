@@ -1,18 +1,21 @@
 // src/api/ProductAPI.js
+
+// subcategories: ['Nike', 'Jordan', 'Dunk', 'Adidas', 'New Balance', 'Puma', 'Balenciaga', 'Converse', 'Vans', 'Asics', 'Under Armour'],
+
 const ProductAPI = {
     products: {
       men: {
         sneaker: {
-          'nike air max': [
-            { id: 1, name: 'Air Max 1', price: 120 },
-            { id: 2, name: 'Air Max 90', price: 150 },
-            { id: 3, name: 'Air Max 95', price: 180 },
+          'nike': [
+            { id: 1, name: 'Air Max 1', price: 120 ,  picture: "am90bt3.jpeg" },
+            { id: 2, name: 'Air Max 90 " Be True "', price: 150, picture: "am90bt2.jpeg" },
+            { id: 3, name: 'Air Max 95', price: 180 , picture: "am90bt.jpeg" },
           ],
-          'nike react': [
+          'jordan': [
             { id: 4, name: 'React Element 55', price: 130 },
             { id: 5, name: 'React Infinity Run', price: 160 },
           ],
-          'nike dunk': [
+          'dunk': [
             { id: 6, name: 'Dunk Low', price: 100 },
             { id: 7, name: 'Dunk High', price: 110 },
           ],
