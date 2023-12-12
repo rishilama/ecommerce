@@ -1,10 +1,11 @@
 // ProductGrid.js
 import React, { useEffect, useState } from 'react';
 import ProductAPI from '../../data/ProductAPI';
-import './ProductGrid.css'
+import './ProductGrid.css';
 
 const ProductGrid = ({ gender, category, subcategory }) => {
   const [products, setProducts] = useState([]);
+  const [subcategorySelected, setSubcategorySelected] = useState(false);
 
   useEffect(() => {
     // Fetch all products of the selected category
@@ -12,12 +13,15 @@ const ProductGrid = ({ gender, category, subcategory }) => {
       ? ProductAPI.products[gender]?.[category]?.[subcategory] || []
       : Object.values(ProductAPI.products[gender]?.[category] || {}).flat() || [];
     setProducts(fetchedProducts);
+
+    // Set the state to true when a subcategory is selected
+    if (subcategory) {
+      setSubcategorySelected(true);
+    }
   }, [gender, category, subcategory]);
 
-  console.log(products)
-
   return (
-    <div className="product-grid">
+    <div className={`product-grid ${subcategorySelected ? 'slide-in' : ''}`}>
       <div className="card-container">
         {products.map((product) => (
           <div key={product.id} className="product-card">
@@ -34,7 +38,5 @@ const ProductGrid = ({ gender, category, subcategory }) => {
     </div>
   );
 };
-
-
 
 export default ProductGrid;
