@@ -1,5 +1,7 @@
 /* src/components/Header.css */
-
+body{
+  margin: 0;
+}
 .parent-container{
   padding-left: 20px;
   padding-right: 20px;
@@ -14,8 +16,6 @@
   }
 }
 
-
-  
   .right-section {
     display: flex;
     justify-content: flex-end;
@@ -73,7 +73,7 @@
     display: flex;
     justify-content: center; /* Center the dropdowns horizontally */
     align-items: center; /* Center the dropdowns vertically */
-    background-color: #333; /* Add your desired background color */
+    background-color: #333; 
     color: #fff; /* Add your desired text color */
   }
   
@@ -144,14 +144,18 @@
   .category{
     width: 100%;
     text-align: center;
+    margin-bottom: 18px;
   }
 
   .subcategory-list{
-    margin-left: -40px;
     padding: 0 10px;
     list-style-type: none;
     /* padding-top: 10px; */
     text-align: center;
+  }
+
+  .subcategory-list:hover{
+    text-decoration: underline;
   }
 
   .subcategory-list:not(:first-child){

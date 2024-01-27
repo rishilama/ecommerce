@@ -5,6 +5,8 @@ import Header from './components/Header/Header';
 import HamburgerHeader from './components/Hamburger-header/Hamburger-header';
 import AllProductPage from './pages/All-Product-Page/AllProductPage';
 import HomePage from './pages/HomePage/HomePage';
+import'./App.css'
+import GenderPage from './pages/GenderPage/GenderPage';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -30,6 +32,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
           <Route path="/:gender/:category" element={<AllProductPage />} />
+          <Route path="/:gender" element={<GenderPage />} />
         </Routes>
 
       </Router>

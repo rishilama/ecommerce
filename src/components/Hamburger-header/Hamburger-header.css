@@ -5,7 +5,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #333;
+    /* background-color: #333; */
     color: #fff;
     position: relative;
   }
@@ -17,7 +17,7 @@
   .line {
     width: 30px;
     height: 3px;
-    background-color: #fff;
+    background-color: #333;
     margin: 6px 0;
   }
   

@@ -2,14 +2,16 @@
 
 // subcategories: ['Nike', 'Jordan', 'Dunk', 'Adidas', 'New Balance', 'Puma', 'Balenciaga', 'Converse', 'Vans', 'Asics', 'Under Armour'],
 
-const ProductAPI = {
+const ProductAPI = 
+{
     products: {
       men: {
         sneaker: {
           'nike': [
-            { id: 1, name: 'Air Max 1', price: 120 ,  picture: "am90bt3.jpeg" },
+            { id: 1, name: 'Air Force " Louis Vuitton "', price: 120 ,  picture: "af1lv.jpg" },
             { id: 2, name: 'Air Max 90 " Be True "', price: 150, picture: "am90bt2.jpeg" },
-            { id: 3, name: 'Air Max 95', price: 180 , picture: "am90bt.jpeg" },
+            { id: 3, name: 'Air Force " Court Vision "', price: 150, picture: "afcv.jpg" },
+            
           ],
           'jordan': [
             { id: 4, name: 'React Element 55', price: 130 },
@@ -59,8 +61,8 @@ const ProductAPI = {
       },
       women: {
         sneaker: {
-          'nike air max': [
-            { id: 24, name: 'Air Max 1', price: 130 },
+          'nike': [
+            { id: 24, name: 'Air Force " Brown Swoosh "', price: 180 , picture: "af1brownswoosh.jpg" },
             { id: 25, name: 'Air Max 90', price: 160 },
             { id: 26, name: 'Air Max 95', price: 190 },
           ],

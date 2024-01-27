@@ -1,8 +1,13 @@
 import React from 'react'
+import FirebaseItemsConsole from '../../components/test/FirebaseTest'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <>
+    
+      <div>HomePage</div>
+      <FirebaseItemsConsole />
+    </>
   )
 }
 

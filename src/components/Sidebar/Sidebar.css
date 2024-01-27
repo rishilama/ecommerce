@@ -12,10 +12,10 @@
         margin-right: auto;
     }
   }
-
+/* 
   .sidebar{
     background-color: aqua;
-  }
+  } */
   .sidebar-gender ul {
     list-style-type: none;
     margin-bottom: 50px;
@@ -28,12 +28,9 @@
   }
 
   .categoryLink{
-    margin-left: -40px;
+    font-weight: bold;
   }
   
-  .subcategory{
-    margin-left: -60px;
-  }
 
   .sidebarCategoryLink {
     position: relative;

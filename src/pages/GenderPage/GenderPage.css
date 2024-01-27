@@ -1,0 +1,25 @@
+.gender-page{
+    margin: 20px 0;
+}
+
+li{
+    list-style-type: none;
+}
+
+Link, a{
+    text-decoration: none;
+    color: black;
+}
+
+
+Link, a:hover{
+    text-decoration: underline;
+}
+
+.categories-list{
+    padding-bottom: 20px;
+}
+
+.subCategories-list{
+    padding-top: 8px;
+}

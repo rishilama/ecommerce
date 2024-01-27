@@ -3,11 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css'; // Import the CSS file
 import Dropdown from '../Dropdown/Dropdown';
-import ProductItems from '../../data/ProductItems';
+// import ProductItems from '../../data/ProductItems';
+import AllProductAPI from '../../data/AllProductAPI';
+
 
 const Header = () => {
   return (
-    <div className='parent-container'>
+    <div className="parent-container header_style">
       <header className="header">
       <div className="left-section">
         <div className="customer-service">
@@ -35,7 +37,7 @@ const Header = () => {
         {/* Example: <input type="text" placeholder="Search" /> */}
       </div>
     </header>
-    <Dropdown items={ProductItems} />
+    <Dropdown items={AllProductAPI} />
 
     </div>
   );

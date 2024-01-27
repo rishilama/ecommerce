@@ -22,20 +22,21 @@ const ProductItems = [
     categories: [
       {
         name: 'Sneaker',
-        subcategories: ['Nike Air Max', 'Nike React', 'Nike Dunk', 'Jordan Retro', 'Jordan AJ1', 'Jordan AJ4'],
+        subcategories: ['Nike', 'Nike React', 'Nike Dunk', 'Jordan Retro', 'Jordan AJ1', 'Jordan AJ4'],
+      },
+      {
+        name: 'Apparels',
+        subcategories: ['adidas', 'Sweatshirt', 'Collar Sweatshit', 'Jacket', 'Jeans'],
       },
     ],
   },
   {
     gender: 'unisex',
     categories: [
-      // Add unisex categories and subcategories as needed
-    ],
-  },
-  {
-    gender: 'all',
-    categories: [
-      // Add categories and subcategories for all genders as needed
+      {
+        name: 'Watches',
+        subcategories: ['Rolex', 'Armani Exchange', 'Emporio Armani'],
+      },
     ],
   },
 ];

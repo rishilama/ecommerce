@@ -1,24 +1,35 @@
+
 // ProductGrid.js
 import React, { useEffect, useState } from 'react';
-import ProductAPI from '../../data/ProductAPI';
+import AllProductAPI from '../../data/AllProductAPI';
 import './ProductGrid.css';
 
-const ProductGrid = ({ gender, category, subcategory }) => {
+const ProductGrid = ({ gender, category, subcategory, location, categoryProducts }) => {
   const [products, setProducts] = useState([]);
   const [subcategorySelected, setSubcategorySelected] = useState(false);
 
   useEffect(() => {
-    // Fetch all products of the selected category
+    console.log('ProductGrid: useEffect triggered');
+
     const fetchedProducts = subcategory
-      ? ProductAPI.products[gender]?.[category]?.[subcategory] || []
-      : Object.values(ProductAPI.products[gender]?.[category] || {}).flat() || [];
+      ? AllProductAPI.filter(
+          (item) =>
+            item.gender === gender &&
+            item.category === category &&
+            item.subcategory === subcategory
+        )
+      : categoryProducts;
+
+    console.log('Fetched Products:', fetchedProducts);
+
     setProducts(fetchedProducts);
 
-    // Set the state to true when a subcategory is selected
     if (subcategory) {
       setSubcategorySelected(true);
+    } else {
+      setSubcategorySelected(false);
     }
-  }, [gender, category, subcategory]);
+  }, [gender, category, subcategory, location, categoryProducts]);
 
   return (
     <div className={`product-grid ${subcategorySelected ? 'slide-in' : ''}`}>
@@ -26,11 +37,16 @@ const ProductGrid = ({ gender, category, subcategory }) => {
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <div className="single-product__image-container">
-              <img src={`/images/product_images/${product.picture}`} alt={product.name} className='product-image' />
+              {/* Make sure the image path is correct */}
+              <img
+                src={`/images/product_images/${product.productImage}`}
+                alt={product.productName}
+                className="product-image"
+              />
             </div>
             <div className="product-details">
-              <h3>{product.name}</h3>
-              <p>${product.price}</p>
+              <h3>{product.productName}</h3>
+              <p>${product.productPrice}</p>
             </div>
           </div>
         ))}

@@ -1,10 +1,23 @@
 // Dropdown.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import ProductAPI from '../../data/ProductAPI'; // Import the ProductAPI
 
 const Dropdown = ({ items }) => {
   const history = useNavigate();
+  const [uniqueGenders, setUniqueGenders] = useState([]);
+  const [uniqueCategories, setUniqueCategories] = useState([]);
+  const [uniqueSubcategories, setUniqueSubcategories] = useState([]);
+
+  useEffect(() => {
+    // Extract unique genders, categories, and subcategories
+    const genders = [...new Set(items.map(item => item.gender))];
+    const categories = [...new Set(items.map(item => item.category))];
+    const subcategories = [...new Set(items.map(item => item.subcategory))];
+
+    setUniqueGenders(genders);
+    setUniqueCategories(categories);
+    setUniqueSubcategories(subcategories);
+  }, [items]);
 
   const handleItemClick = (path) => {
     history(path);
@@ -12,40 +25,41 @@ const Dropdown = ({ items }) => {
 
   // Function to handle category click
   const handleCategoryClick = (gender, category) => {
-    handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}/${items[0].categories[0].subcategories[0].toLowerCase()}`);
-
-    // Fetch and display all elements inside ProductAPI.gender.category dictionary
-    const categoryProducts = ProductAPI.products[gender]?.[category] || [];
-    console.log('Category Products:', categoryProducts);
-    // You can do something with the fetched products, like updating state or displaying them.
+    handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}`);
   };
 
   return (
     <div className="dropdowns">
-      {items.map((item) => (
-        <div className="dropdown" key={item.name}>
-          <button className="dropbtn" onClick={() => handleCategoryClick(item.gender, item.categories[0].name)}>
-            {item.gender}
-          </button>
+      {uniqueGenders.map((gender) => (
+        <div className="dropdown" key={gender}>
+          <button className="dropbtn">{gender}</button>
           <div className="dropdown-content">
-            {item.categories.map((category) => (
-              <div key={category.name} className='category_subcategory'>
+            {uniqueCategories.map((category) => (
+              <div key={category} className='category_subcategory'>
                 <Link 
-                  to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}`}
-                  className='category' onClick={() => handleCategoryClick(item.gender, category.name)}>
-                  {category.name.toLowerCase()}
+                  to={`/${gender.toLowerCase()}/${category.toLowerCase()}`}
+                  className='category' onClick={() => handleCategoryClick(gender, category)}>
+                  {category.toLowerCase()}
                 </Link>
                 <ul>
-                  {category.subcategories.map((subcategory) => (
-                    <li key={subcategory} className='subcategory-list'>
-                      <Link className='subcategory-link'
-                        to={`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}
-                        onClick={() => handleItemClick(`/${item.gender.toLowerCase()}/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`)}
-                      >
-                        {subcategory.toLowerCase()}
-                      </Link>
-                    </li>
-                  ))}
+                  {uniqueSubcategories
+                    .filter((subCategory) => 
+                      items.some((item) => 
+                        item.gender === gender && 
+                        item.category === category && 
+                        item.subcategory === subCategory
+                      )
+                    )
+                    .map((subCategory) => (
+                      <li key={subCategory} className='subcategory-list'>
+                        <Link className='subcategory-link'
+                          to={`/${gender.toLowerCase()}/${category.toLowerCase()}/${subCategory.toLowerCase()}`}
+                          onClick={() => handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}/${subCategory.toLowerCase()}`)}
+                        >
+                          {subCategory.toLowerCase()}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
             ))}
