@@ -1,31 +1,13 @@
 
-.parent-container{
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 90%;
-  }
-  
-  @media (min-width: 768px) {
-    .parent-container {
-        width: 95%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-  }
-/* 
-  .sidebar{
-    background-color: aqua;
-  } */
   .sidebar-gender ul {
     list-style-type: none;
     margin-bottom: 50px;
 
   }
 
-
-  .sidebar-gender ul li {
+  .sidebar-gender ul li ul li{
     margin-top: 8px;
-  }
+  } 
 
   .categoryLink{
     font-weight: bold;
@@ -44,7 +26,6 @@
     bottom: 0;
     left: 0;
     width: 0;
-    height: 2px; /* Adjust the thickness of the underline as needed */
     background-color: #333; /* Use the same color as the text */
     transition: width 0.3s ease; /* Add a transition effect to width */
   }
@@ -55,5 +36,7 @@
   
 
   .sidebar-gender ul li .categoryLink{
-    margin-top: 100px;
+    margin-top: 1000px;
   }
+
+  

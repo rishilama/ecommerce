@@ -45,7 +45,7 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
               />
             </div>
             <div className="product-details">
-              <h3>{product.productName}</h3>
+              <h4>{product.productName}</h4>
               <p>${product.productPrice}</p>
             </div>
           </div>

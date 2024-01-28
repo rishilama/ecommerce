@@ -1,18 +1,19 @@
 // Sidebar.jsx
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import AllProductAPI from '../../data/AllProductAPI';
-import './Sidebar.css';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import AllProductAPI from "../../data/AllProductAPI";
+import "./Sidebar.css";
 
 const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
   const location = useLocation();
-  const currentPath = location.pathname.split('/').filter((item) => item !== '');
+  const currentPath = location.pathname
+    .split("/")
+    .filter((item) => item !== "");
 
-  const isCategoryOpen = (gender, category) => (
+  const isCategoryOpen = (gender, category) =>
     currentPath.length > 2 &&
     currentPath[0] === gender.toLowerCase() &&
-    currentPath[1].toLowerCase() === category.toLowerCase()
-  );
+    currentPath[1].toLowerCase() === category.toLowerCase();
 
   const handleCategoryClick = (gender, category) => {
     try {
@@ -20,30 +21,33 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
       const categoryProducts = AllProductAPI.filter(
         (item) => item.gender === gender && item.category === category
       );
-      console.log('Category Products:', categoryProducts);
+      console.log("Category Products:", categoryProducts);
       onCategoryClick(category, categoryProducts);
     } catch (error) {
-      console.error('Error in handleCategoryClick:', error);
+      console.error("Error in handleCategoryClick:", error);
     }
   };
 
-  const currentGender = currentPath[0] ? currentPath[0].toLowerCase() : '';
+  const currentGender = currentPath[0] ? currentPath[0].toLowerCase() : "";
 
   // Manually specify the desired order of categories
-  const categoryOrder = ['sneaker', 'watches', 'apparels'];
+  const categoryOrder = ["sneaker", "watches", "apparels"];
 
   // Filter categories based on the specified gender and order them accordingly
-  const uniqueCategories = categoryOrder.filter(category =>
-    AllProductAPI.some(item => item.gender === currentGender && item.category === category)
+  const uniqueCategories = categoryOrder.filter((category) =>
+    AllProductAPI.some(
+      (item) => item.gender === currentGender && item.category === category
+    )
   );
 
   return (
-    <div className="sidebar parent-container">
+    <div className="sidebar">
       {uniqueCategories.map((category) => {
         const uniqueSubcategories = Array.from(
           new Set(
             AllProductAPI.filter(
-              (item) => item.gender === currentGender && item.category === category
+              (item) =>
+                item.gender === currentGender && item.category === category
             ).map((item) => item.subcategory)
           )
         );
@@ -53,7 +57,9 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
             <ul>
               <li
                 key={`${currentGender}-${category}-main`}
-                className={isCategoryOpen(currentGender, category) ? 'active' : ''}
+                className={
+                  isCategoryOpen(currentGender, category) ? "active" : ""
+                }
               >
                 <Link
                   className="sidebarCategoryLink categoryLink"
@@ -66,7 +72,11 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
                   {uniqueSubcategories.map((subcategory) => (
                     <li
                       key={`${currentGender}-${category}-${subcategory}-subcategory`}
-                      className={currentPath[3] === subcategory.toLowerCase() ? 'active' : ''}
+                      className={
+                        currentPath[3] === subcategory.toLowerCase()
+                          ? "active"
+                          : ""
+                      }
                     >
                       <Link
                         className="sidebarCategoryLink subcategory"

@@ -1,23 +1,23 @@
 
 .parent-container{
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 90%;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .parent-container {
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
   }
-  
-  @media (min-width: 768px) {
-    .parent-container {
-        width: 95%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-  }
+}
 
   .product-page{
-    padding-top: 18px;
+    padding-top: 28px;
     display: grid;
     grid-template-columns: 20% 80%;
-    gap: 0 10px;
+    /* gap: 0 10px; */
   }
 
   .sidebar{
