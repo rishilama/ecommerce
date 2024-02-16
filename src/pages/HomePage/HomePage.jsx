@@ -1,12 +1,12 @@
 import React from 'react'
-import FirebaseItemsConsole from '../../components/test/FirebaseTest'
+import FirebaseDataFetcher from '../../components/test/databaseTest'
 
 const HomePage = () => {
   return (
     <>
     
       <div>HomePage</div>
-      <FirebaseItemsConsole />
+      <FirebaseDataFetcher />
     </>
   )
 }

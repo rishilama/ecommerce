@@ -23,6 +23,7 @@ const App = () => {
     };
   }, []);
 
+
   return (
     <div className="parent_container">
       <Router>
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
           <Route path="/:gender/:category" element={<AllProductPage />} />
           <Route path="/:gender" element={<GenderPage />} />
+          
         </Routes>
 
       </Router>

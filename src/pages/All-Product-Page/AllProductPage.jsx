@@ -3,43 +3,36 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import ProductGrid from '../../components/ProductGrid/ProductGrid';
-import AllProductAPI from '../../data/AllProductAPI'; // Import AllProductAPI
+import FirebaseDataFetcher from '../../components/test/databaseTest';
 import './AllProductPage.css';
 
 const AllProductPage = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [fetchedData, setFetchedData] = useState([]);
+
   const { gender, category, subcategory } = useParams();
   const location = useLocation();
 
   useEffect(() => {
     setSelectedSubcategory(subcategory);
+  }, [subcategory]);
 
-    // Fetch and set category products when a category is clicked
-    if (!subcategory) {
-      const products = AllProductAPI.filter(
-        (item) => item.gender === gender && item.category === category
-      );
-      setCategoryProducts(products);
-    }
-  }, [gender, category, subcategory]);
-
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category, products) => {
     setSelectedSubcategory(null);
-
-    // Fetch and set category products when a category is clicked
-    const products = AllProductAPI.filter(
-      (item) => item.gender === gender && item.category === category
-    );
     setCategoryProducts(products);
   };
 
+  console.log(category)
+  console.log(fetchedData)
   return (
     <div className="parent-container">
       <div className="product-page">
+        <FirebaseDataFetcher setCategoryProducts={setCategoryProducts} setFetchedData={setFetchedData} />
         <Sidebar
           onSelectSubcategory={setSelectedSubcategory}
           onCategoryClick={handleCategoryClick}
+          fetchedData={categoryProducts}
         />
         <ProductGrid
           gender={gender}

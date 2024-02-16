@@ -1,14 +1,11 @@
 // Sidebar.jsx
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import AllProductAPI from "../../data/AllProductAPI";
 import "./Sidebar.css";
 
-const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
+const Sidebar = ({ onSelectSubcategory, onCategoryClick, fetchedData }) => {
   const location = useLocation();
-  const currentPath = location.pathname
-    .split("/")
-    .filter((item) => item !== "");
+  const currentPath = location.pathname.split("/").filter((item) => item !== "");
 
   const isCategoryOpen = (gender, category) =>
     currentPath.length > 2 &&
@@ -18,7 +15,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
   const handleCategoryClick = (gender, category) => {
     try {
       onSelectSubcategory(null);
-      const categoryProducts = AllProductAPI.filter(
+      const categoryProducts = fetchedData.filter(
         (item) => item.gender === gender && item.category === category
       );
       console.log("Category Products:", categoryProducts);
@@ -35,7 +32,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
 
   // Filter categories based on the specified gender and order them accordingly
   const uniqueCategories = categoryOrder.filter((category) =>
-    AllProductAPI.some(
+    fetchedData && fetchedData.some(
       (item) => item.gender === currentGender && item.category === category
     )
   );
@@ -45,10 +42,11 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
       {uniqueCategories.map((category) => {
         const uniqueSubcategories = Array.from(
           new Set(
-            AllProductAPI.filter(
-              (item) =>
-                item.gender === currentGender && item.category === category
-            ).map((item) => item.subcategory)
+            fetchedData
+              .filter(
+                (item) => item.gender === currentGender && item.category === category
+              )
+              .map((item) => item.subcategory)
           )
         );
 
@@ -57,9 +55,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
             <ul>
               <li
                 key={`${currentGender}-${category}-main`}
-                className={
-                  isCategoryOpen(currentGender, category) ? "active" : ""
-                }
+                className={isCategoryOpen(currentGender, category) ? "active" : ""}
               >
                 <Link
                   className="sidebarCategoryLink categoryLink"
@@ -72,11 +68,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick }) => {
                   {uniqueSubcategories.map((subcategory) => (
                     <li
                       key={`${currentGender}-${category}-${subcategory}-subcategory`}
-                      className={
-                        currentPath[3] === subcategory.toLowerCase()
-                          ? "active"
-                          : ""
-                      }
+                      className={currentPath[3] === subcategory.toLowerCase() ? "active" : ""}
                     >
                       <Link
                         className="sidebarCategoryLink subcategory"
