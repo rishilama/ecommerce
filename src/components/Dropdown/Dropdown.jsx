@@ -1,4 +1,3 @@
-// Dropdown.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -22,10 +21,11 @@ const Dropdown = ({ items }) => {
   const handleItemClick = (path) => {
     history(path);
   };
-
-  // Function to handle category click
+  
   const handleCategoryClick = (gender, category) => {
-    handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}`);
+    if (gender && category) {
+      handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}`);
+    }
   };
 
   return (
@@ -33,18 +33,20 @@ const Dropdown = ({ items }) => {
       {uniqueGenders.map((gender) => (
         <div className="dropdown" key={gender}>
           <button className="dropbtn">{gender}</button>
-          <div className="dropdown-content">
+          <div className="dropdown-content" key="dp_c">
             {uniqueCategories.map((category) => (
               <div key={category} className='category_subcategory'>
                 <Link 
-                  to={`/${gender.toLowerCase()}/${category.toLowerCase()}`}
-                  className='category' onClick={() => handleCategoryClick(gender, category)}>
-                  {category.toLowerCase()}
+                  to={`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}`}
+                  className='category' onClick={() => handleCategoryClick(gender, category)}
+                  key={`${gender}-${category}`} // Unique key for Link element
+                >
+                  {category && category.toLowerCase()}
                 </Link>
-                <ul>
+                <ul key="ul">
                   {uniqueSubcategories
                     .filter((subCategory) => 
-                      items.some((item) => 
+                      subCategory && items.some((item) => 
                         item.gender === gender && 
                         item.category === category && 
                         item.subcategory === subCategory
@@ -53,10 +55,11 @@ const Dropdown = ({ items }) => {
                     .map((subCategory) => (
                       <li key={subCategory} className='subcategory-list'>
                         <Link className='subcategory-link'
-                          to={`/${gender.toLowerCase()}/${category.toLowerCase()}/${subCategory.toLowerCase()}`}
-                          onClick={() => handleItemClick(`/${gender.toLowerCase()}/${category.toLowerCase()}/${subCategory.toLowerCase()}`)}
+                          to={`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subCategory && subCategory.toLowerCase()}`}
+                          onClick={() => handleItemClick(`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subCategory && subCategory.toLowerCase()}`)}
+                          key={`${gender}-${category}-${subCategory}`} // Unique key for Link element
                         >
-                          {subCategory.toLowerCase()}
+                          {subCategory && subCategory.toLowerCase()}
                         </Link>
                       </li>
                     ))}

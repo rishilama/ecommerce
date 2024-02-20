@@ -36,7 +36,8 @@ const Header = () => {
           {/* Example: <input type="text" placeholder="Search" /> */}
         </div>
       </header>
-      <FirebaseDataFetcher setCategoryProducts={setFetchedData} /> {/* Fetch data from Firebase */}
+      <FirebaseDataFetcher setCategoryProducts={setFetchedData} />
+
       <Dropdown items={fetchedData} /> {/* Pass fetched data to Dropdown */}
     </div>
   );
