@@ -27,34 +27,49 @@ function ProductSubmissionForm({ onSubmit }) {
     subcategory: "",
     productName: "",
     productPrice: "",
-    productImage: "",
+    productImages: {}, // Change to object to store multiple image names
     sizes: "",
   });
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleChangeImage = (event, index) => {
+    const { value } = event.target;
+    setFormData({
+      ...formData,
+      productImages: {
+        ...formData.productImages,
+        [index]: value
+      }
+    });
+  };
+
+  const handleAddImage = () => {
+    const numImages = Object.keys(formData.productImages).length;
+    setFormData({
+      ...formData,
+      productImages: {
+        ...formData.productImages,
+        [numImages]: ""
+      }
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      // Set the key to the value of the 'id' field
       const productRef = ref(database, `${formData.id}`);
-
-      // Set the form data to the specified key in Firebase database
       await set(productRef, formData);
       console.log('Form data submitted to Firebase:', formData);
 
-      // Call the onSubmit callback function if provided
       if (typeof onSubmit === 'function') {
         onSubmit(formData);
       }
 
-
-      // Reset the form data
       setFormData({
         id: "",
         gender: "",
@@ -62,7 +77,7 @@ function ProductSubmissionForm({ onSubmit }) {
         subcategory: "",
         productName: "",
         productPrice: "",
-        productImage: "",
+        productImages: {}, // Resetting image object
         sizes: "",
       });
     } catch (error) {
@@ -206,6 +221,14 @@ function ProductSubmissionForm({ onSubmit }) {
           onChange={handleChange}
           className="input-field"
         />
+        {/* <input
+          type="text"
+          name="productImage"
+          placeholder="Product Image"
+          value={formData.productImage}
+          onChange={handleChange}
+          className="input-field"
+        />
         <input
           type="text"
           name="productImage"
@@ -214,6 +237,49 @@ function ProductSubmissionForm({ onSubmit }) {
           onChange={handleChange}
           className="input-field"
         />
+        <input
+          type="text"
+          name="productImage"
+          placeholder="Product Image"
+          value={formData.productImage}
+          onChange={handleChange}
+          className="input-field"
+        />
+        <input
+          type="text"
+          name="productImage"
+          placeholder="Product Image"
+          value={formData.productImage}
+          onChange={handleChange}
+          className="input-field"
+        /> */}
+
+
+<input
+          type="text"
+          name="productImages"
+          placeholder="Number of Images"
+          value={Object.keys(formData.productImages).length} // Display number of images
+          onChange={handleChange}
+          className="input-field"
+          disabled // Disabled as this is automatically calculated
+        />
+        {/* Input fields for multiple image names */}
+        {[...Array(Object.keys(formData.productImages).length)].map((_, index) => (
+          <input
+            key={index}
+            type="text"
+            placeholder={`Image ${index + 1}`}
+            value={formData.productImages[index] || ""}
+            onChange={(e) => handleChangeImage(e, index)}
+            className="input-field"
+          />
+        ))}
+        {/* Button to add more images */}
+        <button type="button" onClick={handleAddImage} className="add-btn">
+          Add Image
+        </button>
+
         <input
           type="text"
           name="sizes"
