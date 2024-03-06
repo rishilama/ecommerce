@@ -1,0 +1,34 @@
+
+.similar-product-section__single-product-page{
+    margin-top: 28px;
+}
+
+.single_product_page{
+
+    margin: 20px 0;
+
+    display: grid;
+    grid-template-columns: 60% 38%;
+    gap: 2%;
+}
+
+.single_product_page-left_section{
+    background-color: bisque;
+}
+
+.single_product_page-right_section{
+    background-color: aqua;
+}
+
+
+@media(max-width:1200px){
+    .single_product_page{
+        grid-template-columns: repeat(2, 50%);
+    }
+}
+
+@media(max-width:768px){
+    .single_product_page{
+        grid-template-columns: 100%;
+    }
+}

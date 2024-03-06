@@ -1,25 +1,46 @@
-// SingleProductPage.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import SelectedProductFetcher from '../../components/test/selectedProductFetcher';
+import SingleProductLeftSection from '../../components/SingleProductLeftSection/SingleProductLeftSection';
+import SingleProductRightSection from '../../components/SingleProductRightSection/SingleProductRightSection';
+import './SingleProductPage.css';
+import SimilarProducts from '../../components/SimilarProducts/SimilarProducts';
+import AlsoBought from '../../components/AlsoBought/AlsoBought';
 
-const SingleProductPage = ({ product }) => {
-    console.log('Product:', product); // Add this line to log the product object
-    return (
-        <div className="single-product">
-          <div className="single-product__image-container">
-            <img
-              src={`/images/product_images/${product.productImage}`}
-              alt={product.productName}
-              className="product-image"
-            />
-          </div>
-          <div className="product-details">
-            <h2>{product.productName}</h2>
-            <p>${product.productPrice}</p>
-            <p>{product.description}</p>
-            {/* Add more details as needed */}
-          </div>
+function SingleProductPage() {
+  const { gender, category, subcategory, productName } = useParams();
+  const [productDetails, setProductDetails] = useState(null);
+
+  useEffect(() => {
+    // No need to fetch additional details here anymore since FirebaseDataFetcher handles it
+  }, [productName]);
+
+  console.log(gender, category, subcategory)
+
+  return (
+    <div className='parent-container'>
+      <div className="single_product_page">
+        <div className="single_product_page-left_section">
+          <SingleProductLeftSection productDetails={productDetails}/>
         </div>
-    );
-};
+        <div className="single_product_page-right_section">
+          <SingleProductRightSection productDetails={productDetails} />
+        </div> 
+
+        <SelectedProductFetcher setProductDetails={setProductDetails} />
+      </div>
+
+      <div className="similar-product-section__single-product-page">
+          <h2>Similar Products</h2>
+          {/* Render ProductGrid component to display similar products */}
+          <SimilarProducts />
+      </div>
+      <div className="similar-product-section__single-product-page">
+          <h2>Others also bought</h2>
+          <AlsoBought  />
+      </div>
+    </div>
+  );
+}
 
 export default SingleProductPage;

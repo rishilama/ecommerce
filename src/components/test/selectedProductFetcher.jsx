@@ -1,15 +1,16 @@
+// FirebaseDataFetcher.js
 import { useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, get } from 'firebase/database';
+import { useParams } from 'react-router-dom';
 
-const FirebaseDataFetcher = ({ setCategoryProducts }) => {
-
+const SelectedProductFetcher = ({ setProductDetails }) => {
+  const { productName } = useParams();
 
   useEffect(() => {
     const fetchDataFromFirebase = async () => {
       try {
-          // Your Firebase config
-          const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyA0a1HfRzT_IzmO0-qnzbybtgFT3aNVX7o",
             authDomain: "products-list-50418.firebaseapp.com",
             databaseURL: "https://products-list-50418-default-rtdb.firebaseio.com",
@@ -23,24 +24,28 @@ const FirebaseDataFetcher = ({ setCategoryProducts }) => {
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        
+
         const snapshot = await get(ref(database, '/'));
         const data = snapshot.val();
-        console.log('Data from Firebase:', data);
-        setCategoryProducts(data); 
-        
-      
-        
-        // Set fetched data to state
+
+        if (data){
+        // Find the selected product by its name
+        const selectedProduct = data.find(product => product.productName === productName);
+
+        console.log('Selected Product Details:', selectedProduct);
+        setProductDetails(selectedProduct); // Set fetched product details to state
+      } else {
+        console.error('No data found in Firebase');
+      }
       } catch (error) {
         console.error('Error fetching data from Firebase:', error);
       }
     };
 
     fetchDataFromFirebase();
-  }, [setCategoryProducts]);
+  }, [productName, setProductDetails]);
 
   return null;
 };
 
-export default FirebaseDataFetcher;
+export default SelectedProductFetcher;

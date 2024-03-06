@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductSubmissionForm.css";
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
-// import ProductFormSubmitted from "../Product-Form-Submitted/Product-Form-Submitted";
-
-
+import { getDatabase, ref, set, get } from 'firebase/database';
 const firebaseConfig = {
     apiKey: "AIzaSyA0a1HfRzT_IzmO0-qnzbybtgFT3aNVX7o",
     authDomain: "products-list-50418.firebaseapp.com",
@@ -14,7 +11,7 @@ const firebaseConfig = {
     messagingSenderId: "327555328633",
     appId: "1:327555328633:web:02fbbdf1948f7bb7f142a8",
     measurementId: "G-SLF18NVH5W"
-}; 
+};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -27,9 +24,11 @@ function ProductSubmissionForm({ onSubmit }) {
     subcategory: "",
     productName: "",
     productPrice: "",
-    productImages: {}, // Change to object to store multiple image names
+    productImages: {},
     sizes: "",
   });
+
+  const [operation, setOperation] = useState("create");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -62,9 +61,15 @@ function ProductSubmissionForm({ onSubmit }) {
     event.preventDefault();
 
     try {
-      const productRef = ref(database, `${formData.id}`);
-      await set(productRef, formData);
-      console.log('Form data submitted to Firebase:', formData);
+      if (operation === "create") {
+        const productRef = ref(database, `${formData.id}`);
+        await set(productRef, formData);
+        console.log('Form data submitted to Firebase:', formData);
+      } else if (operation === "update") {
+        const productRef = ref(database, `${formData.id}`);
+        await set(productRef, formData);
+        console.log('Form data updated in Firebase:', formData);
+      }
 
       if (typeof onSubmit === 'function') {
         onSubmit(formData);
@@ -77,224 +82,271 @@ function ProductSubmissionForm({ onSubmit }) {
         subcategory: "",
         productName: "",
         productPrice: "",
-        productImages: {}, // Resetting image object
+        productImages: {},
         sizes: "",
       });
     } catch (error) {
       console.error('Error submitting form data to Firebase:', error);
     }
   };
-
-
-// const app = initializeApp(firebaseConfig);
-// const database = getDatabase(app);
-
-// function ProductSubmissionForm({ onSubmit }) {
-//   const [formData, setFormData] = useState({
-//     id: "",
-//     gender: "",
-//     category: "",
-//     subcategory: "",
-//     productName: "",
-//     productPrice: "",
-//     productImage: "",
-//     sizes: "",
-//   });
-
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-  
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-  
-//     try {
-//       // Set the key to the value of the 'id' field
-//       const productRef = ref(database, formData.id);
-  
-//       // Set the form data to the specified key in Firebase database
-//       await set(productRef, formData);
-//       console.log('Form data submitted to Firebase:', formData);
-  
-//       // Call the onSubmit callback function if provided
-//       if (typeof onSubmit === 'function') {
-//         onSubmit(formData);
-//       }
-  
-//       // Reset the form data
-//       setFormData({
-//         id: "",
-//         gender: "",
-//         category: "",
-//         subcategory: "",
-//         productName: "",
-//         productPrice: "",
-//         productImage: "",
-//         sizes: "",
-//       });
-//     } catch (error) {
-//       console.error('Error submitting form data to Firebase:', error);
-//     }
-//   };
-  
-  
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (formData.id !== "") {
+        const productRef = ref(database, `${formData.id}`);
+        const snapshot = await get(productRef);
+        if (snapshot.exists()) {
+          const productData = snapshot.val();
+          setFormData((prevData) => ({ ...prevData, ...productData })); // Merge new data with existing formData
+          setOperation("update"); // Set operation to "update"
+        } else {
+          console.log("Product does not exist.");
+          setOperation("create");
+          // If product doesn't exist, clear form fields except ID
+          setFormData((prevData) => ({
+            ...prevData,
+            gender: "",
+            category: "",
+            subcategory: "",
+            productName: "",
+            productPrice: "",
+            productImages: {},
+            sizes: "",
+          }));
+        }
+      }
+    };
+    fetchData();
+  }, [formData.id]); // Only run when formData.id changes
   
 
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
 
-//     try {
-//       // Push the form data to Firebase database
-//       await push(ref(database), formData);
-//       console.log('Form data submitted to Firebase:', formData);
 
-//       // Call the onSubmit callback function if provided
-//       if (typeof onSubmit === 'function') {
-//         onSubmit(formData);
-//       }
 
-//       // Reset the form data
-//       setFormData({
-//         id: "",
-//         gender: "",
-//         category: "",
-//         subcategory: "",
-//         productName: "",
-//         productPrice: "",
-//         productImage: "",
-//         sizes: "",
-//       });
-//     } catch (error) {
-//       console.error('Error submitting form data to Firebase:', error);
-//     }
-//   };
-  return (
-    <div className="parent-container">
-        
-      <form className="product-form" onSubmit={handleSubmit}>
+return (
+  <div className="productForm">
+    <form className="product-form" onSubmit={handleSubmit}>
+      <p style={{marginBottom : "18px"}}>Note: All fields are required</p>
+      <label>
+        ID:
         <input
           type="text"
           name="id"
-          placeholder="ID"
           value={formData.id}
           onChange={handleChange}
           className="input-field"
         />
-        <input
-          type="text"
-          name="gender"
-          placeholder="Gender"
-          value={formData.gender}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="subcategory"
-          placeholder="Subcategory"
-          value={formData.subcategory}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="productName"
-          placeholder="Product Name"
-          value={formData.productName}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="productPrice"
-          placeholder="Product Price"
-          value={formData.productPrice}
-          onChange={handleChange}
-          className="input-field"
-        />
-        {/* <input
-          type="text"
-          name="productImage"
-          placeholder="Product Image"
-          value={formData.productImage}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="productImage"
-          placeholder="Product Image"
-          value={formData.productImage}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="productImage"
-          placeholder="Product Image"
-          value={formData.productImage}
-          onChange={handleChange}
-          className="input-field"
-        />
-        <input
-          type="text"
-          name="productImage"
-          placeholder="Product Image"
-          value={formData.productImage}
-          onChange={handleChange}
-          className="input-field"
-        /> */}
-
-
-<input
-          type="text"
-          name="productImages"
-          placeholder="Number of Images"
-          value={Object.keys(formData.productImages).length} // Display number of images
-          onChange={handleChange}
-          className="input-field"
-          disabled // Disabled as this is automatically calculated
-        />
-        {/* Input fields for multiple image names */}
-        {[...Array(Object.keys(formData.productImages).length)].map((_, index) => (
-          <input
-            key={index}
+      </label>
+      {operation === "create" ? (
+        <>
+          {/* <input
             type="text"
-            placeholder={`Image ${index + 1}`}
-            value={formData.productImages[index] || ""}
-            onChange={(e) => handleChangeImage(e, index)}
+            name="gender"
+            placeholder="Gender"
+            value={formData.gender}
+            onChange={handleChange}
             className="input-field"
           />
-        ))}
-        {/* Button to add more images */}
-        <button type="button" onClick={handleAddImage} className="add-btn">
-          Add Image
-        </button>
+          Other input fields for creation */}
 
+      <input
+        type="text"
+        name="id"
+        placeholder="ID"
+        value={formData.id}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="gender"
+        placeholder="Gender"
+        value={formData.gender}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="category"
+        placeholder="Category"
+        value={formData.category}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="subcategory"
+        placeholder="Subcategory"
+        value={formData.subcategory}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="productName"
+        placeholder="Product Name"
+        value={formData.productName}
+        onChange={handleChange}
+        className="input-field"
+      />
+      {/* <input
+        type="text"
+        name="productUniqueName"
+        placeholder="Product Unique Name"
+        value={formData.productUniqueName}
+        onChange={handleChange}
+        className="input-field"
+      /> */}
+      <input
+        type="text"
+        name="productPrice"
+        placeholder="Product Price"
+        value={formData.productPrice}
+        onChange={handleChange}
+        className="input-field"
+      />
+
+
+      <input
+        type="text"
+        name="productImages"
+        placeholder="Number of Images"
+        value={Object.keys(formData.productImages).length} // Display number of images
+        onChange={handleChange}
+        className="input-field"
+        disabled // Disabled as this is automatically calculated
+      />
+      {/* Input fields for multiple image names */}
+      {[...Array(Object.keys(formData.productImages).length)].map((_, index) => (
         <input
+          key={index}
           type="text"
-          name="sizes"
-          placeholder="Sizes"
-          value={formData.sizes}
-          onChange={handleChange}
+          placeholder={`Image ${index + 1}`}
+          value={formData.productImages[index] || ""}
+          onChange={(e) => handleChangeImage(e, index)}
           className="input-field"
         />
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
+      ))}
+      {/* Button to add more images */}
+      <button type="button" onClick={handleAddImage} className="add-btn">
+        Add Image
+      </button>
+
+      <input
+        type="text"
+        name="sizes"
+        placeholder="Sizes"
+        value={formData.sizes}
+        onChange={handleChange}
+        className="input-field"
+      />
       
-    </div>
-  );
+   
+
+        </>
+      ) : (
+        <>
+          <p>Product exists. You can update the details.</p>
+          <input
+        type="text"
+        name="id"
+        placeholder="ID"
+        value={formData.id}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="gender"
+        placeholder="Gender"
+        value={formData.gender}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="category"
+        placeholder="Category"
+        value={formData.category}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="subcategory"
+        placeholder="Subcategory"
+        value={formData.subcategory}
+        onChange={handleChange}
+        className="input-field"
+      />
+      <input
+        type="text"
+        name="productName"
+        placeholder="Product Name"
+        value={formData.productName}
+        onChange={handleChange}
+        className="input-field"
+      />
+      {/* <input
+        type="text"
+        name="productUniqueName"
+        placeholder="Product Unique Name"
+        value={formData.productUniqueName}
+        onChange={handleChange}
+        className="input-field"
+      /> */}
+      <input
+        type="text"
+        name="productPrice"
+        placeholder="Product Price"
+        value={formData.productPrice}
+        onChange={handleChange}
+        className="input-field"
+      />
+
+
+      <input
+        type="text"
+        name="productImages"
+        placeholder="Number of Images"
+        value={Object.keys(formData.productImages).length} // Display number of images
+        onChange={handleChange}
+        className="input-field"
+        disabled // Disabled as this is automatically calculated
+      />
+      {/* Input fields for multiple image names */}
+      {[...Array(Object.keys(formData.productImages).length)].map((_, index) => (
+        <input
+          key={index}
+          type="text"
+          placeholder={`Image ${index + 1}`}
+          value={formData.productImages[index] || ""}
+          onChange={(e) => handleChangeImage(e, index)}
+          className="input-field"
+        />
+      ))}
+      {/* Button to add more images */}
+      <button type="button" onClick={handleAddImage} className="add-btn">
+        Add Image
+      </button>
+
+      <input
+        type="text"
+        name="sizes"
+        placeholder="Sizes"
+        value={formData.sizes}
+        onChange={handleChange}
+        className="input-field"
+      />
+        </>
+      )}
+      {/* Other input fields */}
+      <button type="submit" className="submit-btn">
+        {operation === "create" ? "Create" : "Update"}
+      </button>
+    </form>
+  </div>
+);
 }
 
 export default ProductSubmissionForm;
