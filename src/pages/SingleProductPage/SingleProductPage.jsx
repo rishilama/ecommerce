@@ -5,7 +5,7 @@ import SingleProductLeftSection from '../../components/SingleProductLeftSection/
 import SingleProductRightSection from '../../components/SingleProductRightSection/SingleProductRightSection';
 import './SingleProductPage.css';
 import SimilarProducts from '../../components/SimilarProducts/SimilarProducts';
-import AlsoBought from '../../components/AlsoBought/AlsoBought';
+// import AlsoBought from '../../components/AlsoBought/AlsoBought';
 
 function SingleProductPage() {
   const { gender, category, subcategory, productName } = useParams();
@@ -35,10 +35,10 @@ function SingleProductPage() {
           {/* Render ProductGrid component to display similar products */}
           <SimilarProducts />
       </div>
-      <div className="similar-product-section__single-product-page">
+      {/* <div className="similar-product-section__single-product-page">
           <h2>Others also bought</h2>
           <AlsoBought  />
-      </div>
+      </div> */}
     </div>
   );
 }
