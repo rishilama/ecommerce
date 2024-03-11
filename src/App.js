@@ -12,6 +12,7 @@ import GenderPage from './pages/GenderPage/GenderPage';
 import ProductSubmissionPage from './pages/ProductSubmissionPage/ProductSubmissionPage';
 // import TestComponent from './components/test-comp';
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -40,18 +41,19 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/:productName" element={<SingleProductPage />} />
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
           <Route path="/:gender/:category" element={<AllProductPage />} />
           <Route path="/:gender" element={<GenderPage />} />
           
 
-          <Route path="/:gender/:category/:subcategory/:productName" element={<SingleProductPage />} />
 
 
           <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage  />} />
 
         </Routes>
 
+        <Footer />
       </Router>
     </div>
   );

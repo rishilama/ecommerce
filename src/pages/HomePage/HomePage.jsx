@@ -21,7 +21,6 @@ const HomePage = () => {
   // };
 
   console.log(location)
-  console.log(category)
   console.log(fetchedData)
 
     return (

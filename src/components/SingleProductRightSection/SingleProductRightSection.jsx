@@ -66,8 +66,8 @@ function SingleProductRightSection({ productDetails }) {
           </div>
           </div>
 
-          <p>Product Description: {productDetails.productDescription}</p>
-          
+          <p>Want Live Vide? <b><i><a target="_blank" rel="noreferrer" href={`https://wa.me/917488004099?text=Hello%20I%20want%20a%20live%20video%20of%20${productDetails.productName}`}>Ask us</a></i></b></p>
+             
         </div>
       )}
     </div>

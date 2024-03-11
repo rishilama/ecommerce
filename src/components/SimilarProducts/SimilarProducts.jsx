@@ -1,70 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import ProductGrid from '../ProductGrid/ProductGrid';
-import './SimilarProducts.css';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, get } from 'firebase/database';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import { getDatabase, ref, get } from "firebase/database";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import Cards from "../Cards/Cards";
+import "./SimilarProducts.css";
 
-const SimilarProducts = () => {
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(4); // Set the initial number of items per page
-  const { gender, category, subcategory, productName } = useParams(); // Extract productName from URL
+const SimilarProducts = ({ productDetails }) => {
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(4); // New state for items per page
   const navigate = useNavigate();
 
   const handleCardClick = (productName) => {
-    const newURL = `/${gender}/${category}/${subcategory}/${productName}`;
+    const newURL = `/${productName}`;
     navigate(newURL);
   };
 
-  useEffect(() => {
-    const fetchDataFromFirebase = async () => {
-      try {
-        // Your Firebase config
-        const firebaseConfig = {
-          apiKey: "AIzaSyA0a1HfRzT_IzmO0-qnzbybtgFT3aNVX7o",
-          authDomain: "products-list-50418.firebaseapp.com",
-          databaseURL: "https://products-list-50418-default-rtdb.firebaseio.com",
-          projectId: "products-list-50418",
-          storageBucket: "products-list-50418.appspot.com",
-          messagingSenderId: "327555328633",
-          appId: "1:327555328633:web:02fbbdf1948f7bb7f142a8",
-          measurementId: "G-SLF18NVH5W"
-}; 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        // Fetch data from Firebase
+  const fetchSimilarProducts = async () => {
+    try {
+      if (productDetails) {
+        const database = getDatabase();
         const snapshot = await get(ref(database, '/'));
         const data = snapshot.val();
-
-        // Filter items that match the current gender, category, and subcategory
-        const filteredItems = data.filter(item => (
-          item.gender === gender &&
-          item.category === category &&
-          item.subcategory === subcategory &&
-          item.productName !== productName // Exclude currently open product
-        ));
-
-        // Shuffle the filtered items
-        shuffleArray(filteredItems);
-
-        // Set fetched and shuffled data to state
-        setCategoryProducts(filteredItems);
-      } catch (error) {
-        console.error('Error fetching data from Firebase:', error);
+  
+        if (data) {
+          const filteredProducts = data.filter(
+            (product) =>
+              product.gender === productDetails.gender &&
+              product.category === productDetails.category &&
+              product.subcategory === productDetails.subcategory &&
+              product.productName !== productDetails.productName
+          );
+  
+          let paginatedProducts = [];
+          const startIndex = currentPage * itemsPerPage;
+          const endIndex = startIndex + itemsPerPage;
+  
+          // Check if endIndex exceeds the length of filteredProducts
+          if (endIndex > filteredProducts.length) {
+            // Calculate remaining items to fill the page
+            const remainingItemsCount = endIndex - filteredProducts.length;
+            // Add remaining items from the beginning of filteredProducts
+            paginatedProducts = filteredProducts.slice(startIndex)
+                                                 .concat(filteredProducts.slice(0, remainingItemsCount));
+          } else {
+            // No need for additional handling, just slice the filtered products
+            paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+          }
+  
+          setSimilarProducts(paginatedProducts);
+        } else {
+          console.error('No data found in Firebase');
+        }
       }
-    };
-
-    fetchDataFromFirebase();
-  }, [gender, category, subcategory, productName]); // Add productName as dependency
+    } catch (error) {
+      console.error('Error fetching similar products:', error);
+    }
+  };
+  
 
   useEffect(() => {
+    fetchSimilarProducts();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ productDetails, currentPage, itemsPerPage]); // Update useEffect dependencies
+
+  useEffect(() => {
+    // Update itemsPerPage based on screen size
     const handleResize = () => {
-      // Check the screen width and update itemsPerPage accordingly
       if (window.innerWidth < 1200 && window.innerWidth >= 768) {
         setItemsPerPage(3);
       } else if (window.innerWidth < 768) {
@@ -74,80 +77,39 @@ const SimilarProducts = () => {
       }
     };
 
-    // Call the handleResize function once to set the initial value
+    // Add event listener for resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize initially
     handleResize();
 
-    // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
+    // Cleanup event listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty dependency array means this effect only runs once
 
-    // Cleanup function to remove event listener
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    // Calculate the starting index for displaying items
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    // Check if the current batch is the last batch
-    const isLastBatch = startIndex + itemsPerPage >= categoryProducts.length;
-    if (isLastBatch) {
-      // Reshuffle the products
-      shuffleArray(categoryProducts);
-      // Reset current page to 1 to start from the beginning
-      setCurrentPage(1);
-    }
-  }, [currentPage, categoryProducts, itemsPerPage]);
-
-  // Fisher-Yates shuffle algorithm
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  };
-
-  // Calculate the starting index for displaying items
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  // Extract a batch of items based on the starting index and itemsPerPage
-  const currentCategoryProducts = categoryProducts.slice(startIndex, startIndex + itemsPerPage);
-
-  // Function to handle next page click
   const nextPage = () => {
-    const totalPages = Math.ceil(categoryProducts.length / itemsPerPage);
-    setCurrentPage((currentPage % totalPages) + 1);
+    setCurrentPage(currentPage + 1);
   };
 
   const prevPage = () => {
-    const totalPages = Math.ceil(categoryProducts.length / itemsPerPage);
-    setCurrentPage((prevPage) => {
-      // Calculate the previous page number
-      let prevPageNumber = prevPage - 1;
-      // Ensure page number never becomes less than 1
-      if (prevPageNumber < 1) {
-        prevPageNumber = totalPages;
-      }
-      return prevPageNumber;
-    }); 
+    setCurrentPage(currentPage - 1);
   };
-  
+
   return (
-    <div className="similar-product__parentContainer">  
-      <div className='similar-product-grid__prev-button'>
-        <FontAwesomeIcon onClick={prevPage} icon={faArrowLeft} />
-      </div>    
-      <div className='similar-product__parent-class'>
-        <ProductGrid
-          gender={gender}
-          category={category}
-          subcategory={subcategory}
-          location={window.location}
-          categoryProducts={currentCategoryProducts}
-          handleCardClick={handleCardClick}
-        />
+      <div className="similar-product__parentContainer">
+        <div className="similar-product-grid__prev-button">
+          <FontAwesomeIcon onClick={prevPage} icon={faArrowLeft} />
+        </div>
+        <div className="similar-product__parent-class">
+          <Cards
+            categoryProducts={similarProducts}
+            handleCardClick={handleCardClick}
+          />
+        </div>
+        <div className="similar-product-grid__next-button">
+          <FontAwesomeIcon onClick={nextPage} icon={faArrowRight} />
+        </div>
       </div>
-      <div className='similar-product-grid__next-button'>
-        <FontAwesomeIcon onClick={nextPage} icon={faArrowRight} />
-      </div>
-    </div>
   );
 };
 

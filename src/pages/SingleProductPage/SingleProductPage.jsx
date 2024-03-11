@@ -5,17 +5,16 @@ import SingleProductLeftSection from '../../components/SingleProductLeftSection/
 import SingleProductRightSection from '../../components/SingleProductRightSection/SingleProductRightSection';
 import './SingleProductPage.css';
 import SimilarProducts from '../../components/SimilarProducts/SimilarProducts';
-// import AlsoBought from '../../components/AlsoBought/AlsoBought';
+import AlsoBought from '../../components/AlsoBought/AlsoBought';
 
 function SingleProductPage() {
-  const { gender, category, subcategory, productName } = useParams();
+  const { productName } = useParams();
   const [productDetails, setProductDetails] = useState(null);
 
   useEffect(() => {
     // No need to fetch additional details here anymore since FirebaseDataFetcher handles it
   }, [productName]);
 
-  console.log(gender, category, subcategory)
 
   return (
     <div className='parent-container'>
@@ -33,12 +32,12 @@ function SingleProductPage() {
       <div className="similar-product-section__single-product-page">
           <h2>Similar Products</h2>
           {/* Render ProductGrid component to display similar products */}
-          <SimilarProducts />
+          <SimilarProducts productDetails={productDetails} />
       </div>
-      {/* <div className="similar-product-section__single-product-page">
+      <div className="similar-product-section__single-product-page">
           <h2>Others also bought</h2>
-          <AlsoBought  />
-      </div> */}
+          <AlsoBought productDetails={productDetails} />
+      </div>
     </div>
   );
 }

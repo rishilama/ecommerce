@@ -32,6 +32,7 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
     }
   }, [gender, category, subcategory, location, categoryProducts]);
 
+
   // Function to handle mouse hover over a product image
   const handleMouseOver = (productId) => {
     setCurrentImageIndices((prevIndices) => ({
@@ -49,7 +50,7 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
   };
 
   return (
-    <div className={`product-grid ${subcategorySelected ? 'slide-in' : ''}`}>
+    <div className="product-grid">
       <div className="card-container">
         {products.map((product) => {
           const currentImageIndex = currentImageIndices[product.id] || 0;
@@ -63,10 +64,10 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
             //   className="product-link"
             // >
             <Link
-                key={product.id}
-                to={`/${gender}/${category}/${subcategory ? subcategory + '/' : ''}${product.productName}`}
-                className="product-link"
-              >
+              key={product.id}
+              to={`/${product.productName}`}
+              className="product-link"
+            >
 
               <div className="product-card">
                 <div className="single-product__image-container">

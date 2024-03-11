@@ -8,6 +8,8 @@ const Header = () => {
   const [fetchedData, setFetchedData] = useState([]);
 
   return (
+    <div>
+      
     <div className="parent-container header_style">
       <header className="header">
         <div className="left-section">
@@ -38,6 +40,7 @@ const Header = () => {
       </header>
       <FirebaseDataFetcher setCategoryProducts={setFetchedData} />
 
+    </div>
       <Dropdown items={fetchedData} /> {/* Pass fetched data to Dropdown */}
     </div>
   );
