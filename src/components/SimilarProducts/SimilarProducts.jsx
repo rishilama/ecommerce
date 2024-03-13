@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getDatabase, ref, get } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cards from "../Cards/Cards";
 import "./SimilarProducts.css";
 
 const SimilarProducts = ({ productDetails }) => {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(4); // New state for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const navigate = useNavigate();
 
   const handleCardClick = (productName) => {
@@ -21,9 +21,9 @@ const SimilarProducts = ({ productDetails }) => {
     try {
       if (productDetails) {
         const database = getDatabase();
-        const snapshot = await get(ref(database, '/'));
+        const snapshot = await get(ref(database, "/"));
         const data = snapshot.val();
-  
+
         if (data) {
           const filteredProducts = data.filter(
             (product) =>
@@ -32,41 +32,40 @@ const SimilarProducts = ({ productDetails }) => {
               product.subcategory === productDetails.subcategory &&
               product.productName !== productDetails.productName
           );
-  
-          let paginatedProducts = [];
+
+          const shuffledProducts = filteredProducts.sort(
+            () => Math.random() - 0.5
+          );
+
           const startIndex = currentPage * itemsPerPage;
           const endIndex = startIndex + itemsPerPage;
-  
-          // Check if endIndex exceeds the length of filteredProducts
-          if (endIndex > filteredProducts.length) {
-            // Calculate remaining items to fill the page
-            const remainingItemsCount = endIndex - filteredProducts.length;
-            // Add remaining items from the beginning of filteredProducts
-            paginatedProducts = filteredProducts.slice(startIndex)
-                                                 .concat(filteredProducts.slice(0, remainingItemsCount));
-          } else {
-            // No need for additional handling, just slice the filtered products
-            paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+          let paginatedProducts = shuffledProducts.slice(startIndex, endIndex);
+
+          if (paginatedProducts.length < itemsPerPage) {
+            const remainingItemsCount = itemsPerPage - paginatedProducts.length;
+            const additionalItems = shuffledProducts.slice(
+              0,
+              remainingItemsCount
+            );
+            paginatedProducts = [...paginatedProducts, ...additionalItems];
           }
-  
+
           setSimilarProducts(paginatedProducts);
         } else {
-          console.error('No data found in Firebase');
+          console.error("No data found in Firebase");
         }
       }
     } catch (error) {
-      console.error('Error fetching similar products:', error);
+      console.error("Error fetching similar products:", error);
     }
   };
-  
 
   useEffect(() => {
     fetchSimilarProducts();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ productDetails, currentPage, itemsPerPage]); // Update useEffect dependencies
+     // eslint-disable-next-line
+  }, [productDetails, currentPage, itemsPerPage]);
 
   useEffect(() => {
-    // Update itemsPerPage based on screen size
     const handleResize = () => {
       if (window.innerWidth < 1200 && window.innerWidth >= 768) {
         setItemsPerPage(3);
@@ -77,15 +76,11 @@ const SimilarProducts = ({ productDetails }) => {
       }
     };
 
-    // Add event listener for resize
     window.addEventListener("resize", handleResize);
-
-    // Call handleResize initially
     handleResize();
 
-    // Cleanup event listener
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty dependency array means this effect only runs once
+  }, []);
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -95,7 +90,20 @@ const SimilarProducts = ({ productDetails }) => {
     setCurrentPage(currentPage - 1);
   };
 
+  if (!productDetails) {
+    return null; // Render nothing if productDetails is null
+  }
+
   return (
+    <>
+      <div className="similar-prod__head-section">
+        <h2>Similar Products</h2>
+        <Link
+          to={`/${productDetails.gender}/${productDetails.category.toLowerCase()}/${productDetails.subcategory.toLowerCase()}`}
+        >
+          View All
+        </Link>
+      </div>
       <div className="similar-product__parentContainer">
         <div className="similar-product-grid__prev-button">
           <FontAwesomeIcon onClick={prevPage} icon={faArrowLeft} />
@@ -110,6 +118,7 @@ const SimilarProducts = ({ productDetails }) => {
           <FontAwesomeIcon onClick={nextPage} icon={faArrowRight} />
         </div>
       </div>
+    </>
   );
 };
 

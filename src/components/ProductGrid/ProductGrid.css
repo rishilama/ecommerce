@@ -1,9 +1,7 @@
-/* .product-grid {
-    opacity: 0;
-    transform: translateY(200px);
-    animation: slideInFromBottom 0.5s ease-out forwards;
-  }
-  
+.product-grid {
+  margin-bottom: 38px;
+}
+/*   
   @keyframes slideInFromBottom {
     to {
       opacity: 1;

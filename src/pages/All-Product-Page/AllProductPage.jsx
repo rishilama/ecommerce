@@ -23,6 +23,14 @@ const AllProductPage = () => {
     setCategoryProducts(products);
   };
 
+  const reverseArrayById = (arr) => {
+    // Convert id to number and sort in descending order
+    return arr.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+  };
+
+  const reversedArray = reverseArrayById(categoryProducts);
+  console.log(reversedArray)
+
   console.log(category)
   console.log(fetchedData)
   return (
@@ -39,7 +47,7 @@ const AllProductPage = () => {
           category={category}
           subcategory={selectedSubcategory}
           location={location}
-          categoryProducts={categoryProducts}
+          categoryProducts={reversedArray}
         />
       </div>
     </div>

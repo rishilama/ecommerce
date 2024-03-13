@@ -47,21 +47,21 @@ const Dropdown = ({ items }) => {
                 </Link>
                 <ul>
                   {uniqueSubcategories
-                    .filter((subCategory) =>
-                      subCategory && items.some((item) =>
+                    .filter((subcategory) =>
+                      subcategory && items.some((item) =>
                         item.gender === gender &&
                         item.category === category &&
-                        item.subcategory === subCategory
+                        item.subcategory === subcategory
                       )
                     )
-                    .map((subCategory) => (
-                      <li key={`${gender}-${category}-${subCategory}`} className='subcategory-list'>
+                    .map((subcategory) => (
+                      <li key={`${gender}-${category}-${subcategory}`} className='subcategory-list'>
                         <Link
                           className='subcategory-link'
-                          to={`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subCategory && subCategory.toLowerCase()}`}
-                          onClick={() => handleItemClick(`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subCategory && subCategory.toLowerCase()}`)}
+                          to={`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subcategory && subcategory.toLowerCase()}`}
+                          onClick={() => handleItemClick(`/${gender && gender.toLowerCase()}/${category && category.toLowerCase()}/${subcategory && subcategory.toLowerCase()}`)}
                         >
-                          {subCategory && subCategory.toLowerCase()}
+                          {subcategory && subcategory.toLowerCase()}
                         </Link>
                       </li>
                     ))}

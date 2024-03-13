@@ -35,3 +35,8 @@
   }
   
 }
+
+.similar-prod__head-section{
+  display: flex;
+  justify-content: space-between;
+}

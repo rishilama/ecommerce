@@ -54,21 +54,12 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
       <div className="card-container">
         {products.map((product) => {
           const currentImageIndex = currentImageIndices[product.id] || 0;
-          // const encodedURI = encodeURIComponent(product.productName)
-          // const decodedUrl = decodeURIComponent(encodedURI);
-          // console.log(encodedURI, decodedUrl)
           return (
-            // <Link
-            //   key={product.id}
-            //   to={`/${gender}/${category}/${subcategory ? subcategory + '/' : ''}${product.productName}`}
-            //   className="product-link"
-            // >
             <Link
               key={product.id}
               to={`/${product.productName}`}
               className="product-link"
             >
-
               <div className="product-card">
                 <div className="single-product__image-container">
                   {product.productImages && product.productImages.length > 0 ? (

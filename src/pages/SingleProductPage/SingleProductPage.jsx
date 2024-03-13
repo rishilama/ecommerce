@@ -11,6 +11,7 @@ function SingleProductPage() {
   const { productName } = useParams();
   const [productDetails, setProductDetails] = useState(null);
 
+  
   useEffect(() => {
     // No need to fetch additional details here anymore since FirebaseDataFetcher handles it
   }, [productName]);
@@ -18,7 +19,7 @@ function SingleProductPage() {
 
   return (
     <div className='parent-container'>
-      <div className="single_product_page">
+      <div className="single_product_page" id='top'>
         <div className="single_product_page-left_section">
           <SingleProductLeftSection productDetails={productDetails}/>
         </div>
@@ -26,18 +27,18 @@ function SingleProductPage() {
           <SingleProductRightSection productDetails={productDetails} />
         </div> 
 
-        <SelectedProductFetcher setProductDetails={setProductDetails} />
       </div>
 
       <div className="similar-product-section__single-product-page">
-          <h2>Similar Products</h2>
           {/* Render ProductGrid component to display similar products */}
           <SimilarProducts productDetails={productDetails} />
       </div>
       <div className="similar-product-section__single-product-page">
-          <h2>Others also bought</h2>
           <AlsoBought productDetails={productDetails} />
       </div>
+
+      <SelectedProductFetcher setProductDetails={setProductDetails} />
+
     </div>
   );
 }

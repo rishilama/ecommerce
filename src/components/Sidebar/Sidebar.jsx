@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ onSelectSubcategory, onCategoryClick, fetchedData }) => {
+const Sidebar = ({ onSelectsubcategory, onCategoryClick, fetchedData }) => {
   const location = useLocation();
   const currentPath = location.pathname.split("/").filter((item) => item !== "");
 
@@ -14,7 +14,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick, fetchedData }) => {
 
   const handleCategoryClick = (gender, category) => {
     try {
-      onSelectSubcategory(null);
+      onSelectsubcategory(null);
       const categoryProducts = fetchedData.filter(
         (item) => item.gender === gender && item.category === category
       );
@@ -73,7 +73,7 @@ const Sidebar = ({ onSelectSubcategory, onCategoryClick, fetchedData }) => {
                       <Link
                         className="sidebarCategoryLink subcategory"
                         to={`/${currentGender}/${category.toLowerCase()}/${subcategory.toLowerCase()}`}
-                        onClick={() => onSelectSubcategory(subcategory)}
+                        onClick={() => onSelectsubcategory(subcategory)}
                       >
                         {subcategory.toLowerCase()}
                       </Link>

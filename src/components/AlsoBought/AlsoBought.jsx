@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, get } from 'firebase/database';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import Cards from '../Cards/Cards';
-import "./AlsoBought.css"; // Create the corresponding CSS file
+import React, { useState, useEffect } from "react";
+import { getDatabase, ref, get } from "firebase/database";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import Cards from "../Cards/Cards";
+import "./AlsoBought.css";
 
 const AlsoBought = ({ productDetails }) => {
-  const [boughtProducts, setBoughtProducts] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const navigate = useNavigate();
@@ -17,13 +17,13 @@ const AlsoBought = ({ productDetails }) => {
     navigate(newURL);
   };
 
-  const fetchBoughtProducts = async () => {
+  const fetchSimilarProducts = async () => {
     try {
       if (productDetails) {
         const database = getDatabase();
-        const snapshot = await get(ref(database, '/'));
+        const snapshot = await get(ref(database, "/"));
         const data = snapshot.val();
-  
+
         if (data) {
           const filteredProducts = data.filter(
             (product) =>
@@ -32,36 +32,36 @@ const AlsoBought = ({ productDetails }) => {
               product.subcategory !== productDetails.subcategory &&
               product.productName !== productDetails.productName
           );
-  
-          let paginatedProducts = [];
+
+          const shuffledProducts = filteredProducts.sort(
+            () => Math.random() - 0.5
+          );
+
           const startIndex = currentPage * itemsPerPage;
           const endIndex = startIndex + itemsPerPage;
-  
-          // Check if endIndex exceeds the length of filteredProducts
-          if (endIndex > filteredProducts.length) {
-            // Calculate remaining items to fill the page
-            const remainingItemsCount = endIndex - filteredProducts.length;
-            // Add remaining items from the beginning of filteredProducts
-            paginatedProducts = filteredProducts.slice(startIndex)
-                                                 .concat(filteredProducts.slice(0, remainingItemsCount));
-          } else {
-            // No need for additional handling, just slice the filtered products
-            paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+          let paginatedProducts = shuffledProducts.slice(startIndex, endIndex);
+
+          if (paginatedProducts.length < itemsPerPage) {
+            const remainingItemsCount = itemsPerPage - paginatedProducts.length;
+            const additionalItems = shuffledProducts.slice(
+              0,
+              remainingItemsCount
+            );
+            paginatedProducts = [...paginatedProducts, ...additionalItems];
           }
-  
-          setBoughtProducts(paginatedProducts);
+
+          setSimilarProducts(paginatedProducts);
         } else {
-          console.error('No data found in Firebase');
+          console.error("No data found in Firebase");
         }
       }
     } catch (error) {
-      console.error('Error fetching bought products:', error);
+      console.error("Error fetching similar products:", error);
     }
   };
-  
 
   useEffect(() => {
-    fetchBoughtProducts();
+    fetchSimilarProducts();
      // eslint-disable-next-line
   }, [productDetails, currentPage, itemsPerPage]);
 
@@ -76,15 +76,11 @@ const AlsoBought = ({ productDetails }) => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    console.log("Bought Products:", boughtProducts);
-  }, [boughtProducts]);
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -94,20 +90,35 @@ const AlsoBought = ({ productDetails }) => {
     setCurrentPage(currentPage - 1);
   };
 
+  if (!productDetails) {
+    return null; // Render nothing if productDetails is null
+  }
+
   return (
-    <div>
-      <div className="bought-product__parentContainer">
-        <div className='bought-product-grid__prev-button'>
+    <>
+      <div className="similar-prod__head-section">
+        <h2>Also Bought</h2>
+        {/* <Link
+          to={`/${productDetails.gender}/${productDetails.category.toLowerCase()}/${productDetails.subcategory.toLowerCase()}`}
+        >
+          View All
+        </Link> */}
+      </div>
+      <div className="similar-product__parentContainer">
+        <div className="similar-product-grid__prev-button">
           <FontAwesomeIcon onClick={prevPage} icon={faArrowLeft} />
         </div>
-        <div className='bought-product__parent-class'>
-          <Cards categoryProducts={boughtProducts} handleCardClick={handleCardClick} />
+        <div className="similar-product__parent-class">
+          <Cards
+            categoryProducts={similarProducts}
+            handleCardClick={handleCardClick}
+          />
         </div>
-        <div className='bought-product-grid__next-button'>
+        <div className="similar-product-grid__next-button">
           <FontAwesomeIcon onClick={nextPage} icon={faArrowRight} />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
