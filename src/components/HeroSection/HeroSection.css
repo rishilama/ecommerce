@@ -1,0 +1,70 @@
+.heroSection__parent {
+    margin: 18px 0;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.heroSection__child__leftSide {
+    width: 100%;
+    height: 100%; /* Use 100% height to fill the available space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heroSection__child__leftSide img {
+    width: 100%;
+    height: 100vh; /* Let the height adjust to maintain aspect ratio */
+    object-fit: cover; /* Prevent image from stretching */
+}
+
+.heroSection__child__rightSide {
+    display: grid;
+    grid-template-rows: auto auto; /* Adjust the rows to fit the content */
+}
+
+.rightSide__firstChild,
+.rightSide__secondChild {
+    width: 100%; /* Ensure images fill the entire width */
+    height: auto; /* Let the height adjust to maintain aspect ratio */
+}
+
+.rightSide__firstChild img,
+.rightSide__secondChild img {
+    width: 100%;
+    height: 50vh; /* Ensure the image fills its container */
+    object-fit: cover; /* Prevent image from stretching */
+}
+
+@media (max-width: 1000px) {
+    .heroSection__parent {
+        grid-template-columns: 100%; /* Adjust columns for smaller screens */
+    }
+
+    .heroSection__child__leftSide,
+    .heroSection__child__rightSide {
+        width: 100%; /* Ensure full width for smaller screens */
+        height: auto; /* Let height adjust */
+    }
+
+
+    .heroSection__child__rightSide{
+        display: flex;
+    }
+
+    .heroSection__child__leftSide img {
+        width: 100%;
+        height: auto;
+        object-fit: fill;
+    }
+    
+    .heroSection__child__leftSide{
+        background-color: red;
+    }
+}
+
+@media(max-width:400px){
+    .heroSection__child__rightSide img{
+        height: 20vh;
+    }
+}

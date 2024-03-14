@@ -13,6 +13,9 @@ import ProductSubmissionPage from './pages/ProductSubmissionPage/ProductSubmissi
 // import TestComponent from './components/test-comp';
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 import Footer from './components/Footer/Footer';
+// import CategoryPage from './pages/NewArrivals/NewArrivals';
+import NewArrivals from './pages/NewArrivals/NewArrivals';
+import CategoryPage from './pages/CategoryPage/CategoryPage';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -43,9 +46,11 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/:productName" element={<SingleProductPage />} />
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
-          <Route path="/:gender/:category" element={<AllProductPage />} />
+          <Route path="/:gender/:category" element={<CategoryPage />} />
           <Route path="/:gender" element={<GenderPage />} />
           
+
+          <Route path="/new_arrivals" element={<NewArrivals />} />
 
 
 

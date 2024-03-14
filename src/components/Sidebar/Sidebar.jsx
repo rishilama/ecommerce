@@ -3,7 +3,9 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ onSelectsubcategory, onCategoryClick, fetchedData }) => {
+// const Sidebar = ({ onSelectsubcategory, onCategoryClick, fetchedData }) => {
+const Sidebar = ({ onSelectsubcategory = () => {}, onCategoryClick, fetchedData }) => {
+  
   const location = useLocation();
   const currentPath = location.pathname.split("/").filter((item) => item !== "");
 

@@ -1,55 +1,135 @@
-import React from 'react'
-import FirebaseDataFetcher from '../../components/test/databaseTest'
-// import ProductGrid from '../../components/ProductGrid/ProductGrid';
-import { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import Cards from '../../components/Cards/Cards';
+import React, { useState, useEffect } from "react";
+import { getDatabase, ref, get } from "firebase/database";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, Link } from "react-router-dom";
+import Cards from "../../components/Cards/Cards";
+import HeroSection from "../../components/HeroSection/HeroSection";
+import FirebaseDataFetcher from "../../components/test/databaseTest";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const navigate = useNavigate();
 
-  const { gender, category, subcategory } = useParams();
-  const location = useLocation();
+  console.log(categoryProducts, fetchedData)
+  const handleCardClick = (productName) => {
+    const newURL = `/${productName}`;
+    navigate(newURL);
+  };
 
   const reverseArrayById = (arr) => {
     // Convert id to number and sort in descending order
     return arr.sort((a, b) => parseInt(b.id) - parseInt(a.id));
   };
 
-  const reversedArray = reverseArrayById(categoryProducts);
-    console.log(reversedArray);
+  const fetchSimilarProducts = async () => {
+    try {
+      const database = getDatabase();
+      const snapshot = await get(ref(database, "/"));
+      const data = snapshot.val();
 
-  // useEffect(() => {
-  //   setSelectedSubcategory(subcategory);
-  // }, [subcategory]);
+      if (data) {
+        const reversedArray = reverseArrayById(data);
+        setCategoryProducts(reversedArray);
 
-  // const handleCategoryClick = (category, products) => {
-  //   setSelectedSubcategory(null);
-  //   setCategoryProducts(products);
-  // };
+        const startIndex = currentPage * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        let paginatedProducts = reversedArray.slice(startIndex, endIndex);
 
-  console.log(location)
-  console.log(category)
-  console.log(fetchedData)
+        if (paginatedProducts.length < itemsPerPage) {
+          const remainingItemsCount = itemsPerPage - paginatedProducts.length;
+          const additionalItems = reversedArray.slice(0, remainingItemsCount);
+          paginatedProducts = [...paginatedProducts, ...additionalItems];
+        }
 
-    return (
-      <div className='parent-container'>
-        {/* <ProductGrid
-            gender={gender}
-            category={category}
-            subcategory={subcategory}
-            location={window.location}
-            categoryProducts={categoryProducts} // Pass categoryProducts data to ProductGrid
-          /> */}
+        setSimilarProducts(paginatedProducts);
+      } else {
+        console.error("No data found in Firebase");
+      }
+    } catch (error) {
+      console.error("Error fetching similar products:", error);
+    }
+  };
 
-        <Cards categoryProducts={categoryProducts} />
+  useEffect(() => {
+    fetchSimilarProducts();
+    // eslint-disable-next-line
+  }, [currentPage, itemsPerPage]);
 
-        <FirebaseDataFetcher setCategoryProducts={setCategoryProducts} setFetchedData={setFetchedData} />
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200 && window.innerWidth >= 768) {
+        setItemsPerPage(3);
+      } else if (window.innerWidth < 768) {
+        setItemsPerPage(2);
+      } else {
+        setItemsPerPage(4);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  return (
+    <>
+      <HeroSection />
+
+      <div className="newArrivalsSection">
+        <div className="parent-container">
+          <FirebaseDataFetcher
+            setCategoryProducts={setCategoryProducts}
+            setFetchedData={setFetchedData}
+          />
+
+          <div className="new-arrivals__head-section">
+            <h2
+              style={{
+                textAlign: "center",
+                marginTop: "38px",
+                marginBottom: "30px",
+              }}
+            >
+              New Arrivals
+            </h2>
+            <Link to="/new_arrivals">
+              <p style={{ textAlign: "right" }}>View All</p>
+            </Link>
+          </div>
+
+          <div className="similar-product__parentContainer">
+            <div className="similar-product-grid__prev-button">
+              <FontAwesomeIcon onClick={prevPage} icon={faArrowLeft} />
+            </div>
+            <div className="similar-product__parent-class">
+              <Cards
+                categoryProducts={similarProducts}
+                handleCardClick={handleCardClick}
+              />
+            </div>
+            <div className="similar-product-grid__next-button">
+              <FontAwesomeIcon onClick={nextPage} icon={faArrowRight} />
+            </div>
+          </div>
+        </div>
       </div>
+    </>
+  );
+};
 
-    )
-}
-
-  
-export default HomePage
+export default HomePage;

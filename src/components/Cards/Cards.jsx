@@ -11,7 +11,7 @@ function Cards({ categoryProducts }) {
     };
 
     return (
-        <div className='card-container'>
+            <div className="card-container">
             {filteredProducts.map((prod) => (
                 <Link
                     key={prod.id}
@@ -23,7 +23,7 @@ function Cards({ categoryProducts }) {
                         <div className="single-product__image-container">
                             <div className="single-product__image-container">
                                 {prod.productImages.length > 0 && (
-                                    <img src={`/images/product_images/${prod.productImages[0]}`} alt={prod.productImages[0]} />
+                                    <img src={`/images/product_images/${prod.productImages[0]}`} alt={prod.productImages[0]} className='cardClick' />
                                 )}
                             </div>
                             <div className="product-details">
