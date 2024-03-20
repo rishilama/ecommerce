@@ -1,0 +1,215 @@
+.categoryPage{
+    margin-top: 38px;
+}
+
+.oddIndex,
+.evenIndex{
+    margin-bottom: 108px;
+}
+
+
+@media(max-width:768px){
+    .oddIndex, 
+    .evenIndex{
+        margin-bottom: 58px;
+    }
+}
+
+.cardsContainer__categoryName,
+.cardsContainer__categoryLink a {
+    text-transform: uppercase;
+    color: white;
+}
+
+.cardsContainer__categoryName{
+    cursor: pointer;
+}
+
+.cardsContainer__categoryLink a:hover {
+    color: red;
+}
+
+.oddIndex .cardsContainer__rightSection,
+.evenIndex .cardsContainer__leftSection{
+    cursor: pointer;
+}
+
+
+/* ------------------------------------------------------------------------------------ */
+/* odd index */
+.oddIndex {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 44.5% 50%;
+    justify-content: space-between;
+    position: relative;
+}
+
+.oddIndex .cardsContainer__leftSection {
+    position: relative;
+}
+
+.oddIndex .cardsContainer__categoryText {
+    padding: 0 18px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+.oddIndex .cardsContainer__rightSection {
+    position: relative;
+}
+
+.oddIndex .cardsContainer__rightSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.5); /* Adjust opacity as needed */
+}
+
+.oddIndex .cardsContainer__rightSection .categoryPage__subcategoryImage {
+    width: 100%;
+    height: 100%; /* Take the height of the parent container */
+    object-fit: cover; /* Maintain aspect ratio */
+    aspect-ratio: 1/1;
+}
+
+.oddIndex .cardsContainer__leftSection .card-container {
+    grid-template-columns: repeat(2, 50%);
+}
+
+
+
+
+@media(max-width:768px){
+    .oddIndex{
+        width: 110%;
+    }
+    .evenIndex{
+        width: 106%;
+    }
+    .oddIndex .cardsContainer__leftSection{
+        margin-right: 20px;
+    }
+}
+
+@media(max-width:600px){
+    .evenIndex{
+        width: 104%;
+    }
+    .oddIndex{
+        grid-template-columns: 100%;
+        gap: 18px 0;
+    }
+    .oddIndex .cardsContainer__leftSection{
+        grid-row: 2/3;
+    }
+}
+
+
+/* even index */
+
+
+.evenIndex{
+    display: grid;
+    grid-template-columns: repeat(2,48%);
+    gap: 18px 38px;
+    position: relative;
+}
+
+
+@media(max-width:600px){
+    .evenIndex{
+        grid-template-columns: 100%;
+    }
+}
+
+@media(max-width:1200px){
+    .evenIndex{
+        gap: 18px 28px;
+    }
+}
+
+.evenIndex .cardsContainer__leftSection {
+    position: relative;
+}
+
+.evenIndex .cardsContainer__categoryText {
+    padding: 0 18px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.evenIndex .cardsContainer__categoryName,
+.evenIndex .cardsContainer__categoryLink{
+    text-transform: uppercase;
+
+}
+
+.evenIndex .cardsContainer__leftSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.5); /* Adjust opacity as needed */
+}
+
+.evenIndex .cardsContainer__leftSection .categoryPage__subcategoryImage{
+    width: 100%;
+    height: 100%; /* Take the height of the parent container */
+    object-fit: cover; /* Maintain aspect ratio */
+    aspect-ratio: 1/1;
+}
+
+
+.smallScrBtn{
+    display: none;
+}
+
+
+@media(max-width:600px){
+    .evenIndex .cardsContainer__leftSection::before, 
+    .evenIndex .cardsContainer__leftSection .categoryPage__subcategoryImage{
+        width: 106%;
+    }
+    .btnSection{
+        padding: 28px;
+        width: 106.5%;
+        display: flex;
+        justify-content: center;
+    }
+    .smallScrBtn{
+        padding: 8px 18px;
+        display: block;
+        /* width: 50%; */
+
+        background-color: #333;
+        color: white;
+        border: none;
+    }
+    .smallScrBtn:hover{
+        color: red;
+        text-decoration: none;
+    }
+}
+
+.evenIndex .cardsContainer__rightSection .card-container{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+}
+

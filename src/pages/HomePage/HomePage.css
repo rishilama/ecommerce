@@ -1,4 +1,21 @@
 .newArrivalsSection{
     margin: 58px 0 28px;
 }
+.viewAll__btnSection{
+    padding: 28px;
+    display: flex;
+    justify-content: center;
+}
+.viewAllBtn{
+    padding: 8px 18px;
+    display: block;
+    /* width: 50%; */
 
+    background-color: #333;
+    color: white;
+    border: none;
+}
+.viewAllBtn:hover{
+    color: red;
+    text-decoration: none;
+}

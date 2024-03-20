@@ -4,8 +4,11 @@ import './Header.css'; // Import the CSS file
 import Dropdown from '../Dropdown/Dropdown';
 import FirebaseDataFetcher from '../test/databaseTest'; // Import FirebaseDataFetcher
 
-const Header = () => {
+const Header = ({ name }) => {
   const [fetchedData, setFetchedData] = useState([]);
+
+  console.log(name)
+
 
   return (
     <div>
@@ -26,9 +29,11 @@ const Header = () => {
           </div>
         </div>
         <div className="right-section">
-          <div className="sign-in">
-            <Link className="header-link" to="/sign-in">Become a sneakerhead</Link>
-          </div>
+        <div className="sign-in">
+    {/* {name ? <p>Welcome - {name}</p> :  */}
+    <Link className="header-link" to="/signup">Become a sneakerhead</Link>
+    {/* } */}
+  </div>
           <div className="cart">
             <Link className="header-link" to="/cart">Cart</Link>
           </div>

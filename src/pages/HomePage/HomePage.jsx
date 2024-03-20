@@ -107,9 +107,9 @@ const HomePage = () => {
             >
               New Arrivals
             </h2>
-            <Link to="/new_arrivals">
+            {/* <Link to="/new_arrivals">
               <p style={{ textAlign: "right" }}>View All</p>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="similar-product__parentContainer">
@@ -127,6 +127,11 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
+
+        <div className="viewAll__btnSection">
+                <Link to="new_arrivals"><button className="viewAllBtn">View All</button></Link>
+                </div>
       </div>
     </>
   );

@@ -7,8 +7,36 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
   const [subcategorySelected, setSubcategorySelected] = useState(false);
   const [currentImageIndices, setCurrentImageIndices] = useState({});
 
+  console.log(subcategorySelected)
+  // useEffect(() => {
+  //   console.log('ProductGrid: useEffect triggered');
+
+  //   if (categoryProducts && categoryProducts.length > 0) {
+  //     const fetchedProducts = subcategory
+  //       ? categoryProducts.filter(
+  //           (item) =>
+  //             item.gender === gender &&
+  //             item.category === category &&
+  //             item.subcategory === subcategory
+  //         )
+  //       : categoryProducts;
+
+  //     console.log('Fetched Products:', fetchedProducts);
+
+  //     setProducts(fetchedProducts);
+
+  //     if (subcategory) {
+  //       setSubcategorySelected(true);
+  //     } else {
+  //       setSubcategorySelected(false);
+  //     }
+  //   }
+  // }, [gender, category, subcategory, location, categoryProducts]);
+
+
   useEffect(() => {
     console.log('ProductGrid: useEffect triggered');
+    console.log('Individual Category Products:', categoryProducts);
 
     if (categoryProducts && categoryProducts.length > 0) {
       const fetchedProducts = subcategory
@@ -20,10 +48,20 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
           )
         : categoryProducts;
 
+
+        categoryProducts.forEach(product => {
+          console.log('Product:', product);
+        });
+        
+
+  
+        console.log("asas",categoryProducts)
+
       console.log('Fetched Products:', fetchedProducts);
-
+  
       setProducts(fetchedProducts);
-
+  
+      console.log(subcategory)
       if (subcategory) {
         setSubcategorySelected(true);
       } else {
@@ -31,8 +69,9 @@ const ProductGrid = ({ gender, category, subcategory, location, categoryProducts
       }
     }
   }, [gender, category, subcategory, location, categoryProducts]);
+  
 
-
+  console.log(subcategorySelected)
   // Function to handle mouse hover over a product image
   const handleMouseOver = (productId) => {
     setCurrentImageIndices((prevIndices) => ({

@@ -31,6 +31,9 @@ const AllProductPage = () => {
   const reversedArray = reverseArrayById(categoryProducts);
   console.log(reversedArray)
 
+
+
+
   console.log(category)
   console.log(fetchedData)
   return (

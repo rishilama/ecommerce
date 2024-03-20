@@ -31,6 +31,7 @@ const NewArrivals = () => {
         <div className="newArrivals__cardsSection">
           <Cards categoryProducts={categoryProducts} />
         </div>
+        
 
         <FirebaseDataFetcher setCategoryProducts={setCategoryProducts} setFetchedData={setFetchedData} />
       </div>

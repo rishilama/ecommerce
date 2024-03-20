@@ -23,33 +23,30 @@ const AlsoBought = ({ productDetails }) => {
         const database = getDatabase();
         const snapshot = await get(ref(database, "/"));
         const data = snapshot.val();
-
+  
         if (data) {
           const filteredProducts = data.filter(
             (product) =>
-              product.gender === productDetails.gender &&
-              product.category === productDetails.category &&
-              product.subcategory !== productDetails.subcategory &&
+              // product.gender !== productDetails.gender &&
+              // product.category !== productDetails.category &&
+              // product.subcategory !== productDetails.subcategory &&
               product.productName !== productDetails.productName
           );
-
-          const shuffledProducts = filteredProducts.sort(
-            () => Math.random() - 0.5
-          );
-
+  
+          const shuffledProducts = filteredProducts.sort(() => Math.random() - 0.5);
+  
           const startIndex = currentPage * itemsPerPage;
           const endIndex = startIndex + itemsPerPage;
           let paginatedProducts = shuffledProducts.slice(startIndex, endIndex);
-
+  
           if (paginatedProducts.length < itemsPerPage) {
             const remainingItemsCount = itemsPerPage - paginatedProducts.length;
-            const additionalItems = shuffledProducts.slice(
-              0,
-              remainingItemsCount
-            );
+            const additionalItems = shuffledProducts
+              .slice(0, remainingItemsCount)
+              .filter((item) => !paginatedProducts.find((p) => p.productName === item.productName)); // Filter out existing products
             paginatedProducts = [...paginatedProducts, ...additionalItems];
           }
-
+  
           setSimilarProducts(paginatedProducts);
         } else {
           console.error("No data found in Firebase");
@@ -59,6 +56,7 @@ const AlsoBought = ({ productDetails }) => {
       console.error("Error fetching similar products:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchSimilarProducts();

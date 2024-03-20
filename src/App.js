@@ -17,6 +17,7 @@ import Footer from './components/Footer/Footer';
 import NewArrivals from './pages/NewArrivals/NewArrivals';
 import CategoryPage from './pages/CategoryPage/CategoryPage';
 
+
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -37,6 +38,9 @@ const App = () => {
   //   // Here you can handle the form submission logic, such as sending the data to Firebase.
   // };
 
+
+
+
   return (
     <div className="parent_container">
       <Router>
@@ -51,7 +55,6 @@ const App = () => {
           
 
           <Route path="/new_arrivals" element={<NewArrivals />} />
-
 
 
           <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage  />} />
