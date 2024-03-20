@@ -20,6 +20,17 @@
     text-decoration: none;
 }
 
-.similar-product__parentContainer{
-    justify-content: space-between;
+@media(max-width:500px){
+    .newArrivalsSection .similar-product__parentContainer{
+        background-color: blueviolet;
+        width: 112%;
+    }
+
+    .similar-product-grid__prev-button{
+        margin-right: 18px;
+    }
+
+    .similar-product-grid__next-button{
+        margin-left: 18px;
+    }
 }
