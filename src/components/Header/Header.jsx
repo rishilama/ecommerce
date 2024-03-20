@@ -31,7 +31,7 @@ const Header = ({ name }) => {
         <div className="right-section">
         <div className="sign-in">
     {/* {name ? <p>Welcome - {name}</p> :  */}
-    <Link className="header-link" to="/signup">Become a sneakerhead</Link>
+    <Link className="header-link" to="/join">Become a sneakerhead</Link>
     {/* } */}
   </div>
           <div className="cart">

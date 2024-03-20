@@ -1,0 +1,4 @@
+.product-details__categoryDetails{
+    display: flex;
+    justify-content: space-between;
+}

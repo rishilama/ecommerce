@@ -44,8 +44,6 @@ function SingleProductRightSection({ productDetails }) {
               alt="bag"
               className="svg-img cart-svg-img"
             />
-
-
             Add to Cart
           </button>
 
@@ -66,7 +64,7 @@ function SingleProductRightSection({ productDetails }) {
           </div>
           </div>
 
-          <p>Want Live Vide? <b><i><a target="_blank" rel="noreferrer" href={`https://wa.me/917488004099?text=Hello%20I%20want%20a%20live%20video%20of%20${productDetails.productName}`}>Ask us</a></i></b></p>
+          <p>Want Live Video? <b><i><a target="_blank" rel="noreferrer" href={`https://wa.me/917488004099?text=Hello%20I%20want%20a%20live%20video%20of%20${productDetails.productName}`}>Ask us</a></i></b></p>
              
         </div>
       )}

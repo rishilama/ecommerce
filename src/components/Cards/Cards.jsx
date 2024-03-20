@@ -27,7 +27,10 @@ function Cards({ categoryProducts }) {
                                 )}
                             </div>
                             <div className="product-details">
-                                <p>{prod.subcategory}</p>
+                                <div className="product-details__categoryDetails">
+                                    <p>{prod.subcategory}</p>
+                                    <p>{prod.category}</p>
+                                </div>
                                 <h4>{prod.productName}</h4>
                                 <p>${prod.productPrice}</p>
                             </div>

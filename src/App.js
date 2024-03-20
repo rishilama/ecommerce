@@ -16,6 +16,9 @@ import Footer from './components/Footer/Footer';
 // import CategoryPage from './pages/NewArrivals/NewArrivals';
 import NewArrivals from './pages/NewArrivals/NewArrivals';
 import CategoryPage from './pages/CategoryPage/CategoryPage';
+import SignupPage from './pages/SignupPage/SignupPage';
+import Login from './pages/LoginPage/LoginPage';
+import Cart from './components/Cart/Cart';
 
 
 const App = () => {
@@ -55,6 +58,10 @@ const App = () => {
           
 
           <Route path="/new_arrivals" element={<NewArrivals />} />
+
+          <Route path='/join' element={<SignupPage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/cart' element={<Cart />} />
 
 
           <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage  />} />
