@@ -19,3 +19,7 @@
     color: red;
     text-decoration: none;
 }
+
+.similar-product__parentContainer{
+    justify-content: space-between;
+}
