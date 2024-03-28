@@ -59,7 +59,7 @@ function CategoryPage() {
     <div className="parent-container">
       {uniqueSubcategories.map((subcategory, index) => (
         <div className="categoryPage" style={{width: index % 2 !== 0 ? "102%" : "100%",}}>
-          <div className="cardsContainer" key={index}>
+          <div className="cardsContainer" >
             {index % 2 !== 0 ? (
                 <>
               <div className="oddIndex">

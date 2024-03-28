@@ -49,11 +49,10 @@ body{
     align-items: center;
     width: 100%;
   }
-
   .left-section .newsletter,
   .right-section .cart{
     margin-left: 20px;
-  }
+  } 
 
   .header-link{
     text-decoration: none;

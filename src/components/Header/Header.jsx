@@ -34,8 +34,7 @@ const Header = ({ name }) => {
     <Link className="header-link" to="/join">Become a sneakerhead</Link>
     {/* } */}
   </div>
-          <div className="cart">
-            <Link className="header-link" to="/cart">Cart</Link>
+          <div className="cart"><p className="header-link">Cart</p>
           </div>
         </div>
         <div className="search-bar">

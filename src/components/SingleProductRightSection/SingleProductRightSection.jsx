@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SingleProductRightSection.css";
 import { Link } from "react-router-dom";
 
-function SingleProductRightSection({ productDetails }) {
+function SingleProductRightSection({ productDetails, onAddToCart, onCartVisibilityChange, cartVisiblity }) {
+  const [selectedSize, setSelectedSize] = useState(null);
+  // const [cartVisiblity, setCartVisiblity] = useState(false)
+
   const oldPrice = (price) => price * 2;
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    
+  };
+
+  // console.log(cartVisiblity)
+
+
+  const handleAddToCart = () => {
+    if (selectedSize) {
+      onAddToCart({ ...productDetails, selectedSize });
+      setSelectedSize(null);
+      onCartVisibilityChange(true);
+      // eslint-disable-next-line
+      const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      // Add the new item to cartItems
+      const updatedCartItems = [...existingCartItems, { ...productDetails, selectedSize }];
+
+      // Update localStorage with the updated cartItems
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+    // eslint-disable-next-line
+    }
+    // eslint-disable-next-line
+  };
+  // eslint-disable-next-line
 
   return (
     <div className="productDetails">
@@ -22,8 +52,14 @@ function SingleProductRightSection({ productDetails }) {
             <p>Sizes</p>
             <div className="sizes-section">
               {productDetails.sizes.split("-").map((size, index) => (
-                <button key={index} className="size-btn">
-                  {size}
+                <button
+                  key={index}
+                  className={`size-btn ${
+                    size === selectedSize ? "selected" : ""
+                  }`}
+                  onClick={() => handleSizeSelect(size)}
+                >
+                  <p><b> {size}</b></p>
                 </button>
               ))}
             </div>
@@ -38,15 +74,14 @@ function SingleProductRightSection({ productDetails }) {
               Size Chart
             </Link>
           </div>
-          <button className="addToCartButton__SingleProductPage">
-            <img
-              src="/images/bag-shopping-solid.svg"
-              alt="bag"
-              className="svg-img cart-svg-img"
-            />
-            Add to Cart
+          <button
+            className="addToCartButton__SingleProductPage"
+            onClick={handleAddToCart}
+            disabled={!selectedSize}
+          >
+            <p><b>Add to Cart</b></p>
           </button>
-
+          
           
           <div className="more-delivery-details">
           <div className="delivery-section__details">
@@ -67,6 +102,8 @@ function SingleProductRightSection({ productDetails }) {
           <p>Want Live Video? <b><i><a target="_blank" rel="noreferrer" href={`https://wa.me/917488004099?text=Hello%20I%20want%20a%20live%20video%20of%20${productDetails.productName}`}>Ask us</a></i></b></p>
              
         </div>
+
+        
       )}
     </div>
   );

@@ -12,13 +12,13 @@
     gap: 2%;
 }
 
-.single_product_page-left_section{
+/* .single_product_page-left_section{
     background-color: bisque;
 }
 
 .single_product_page-right_section{
     background-color: aqua;
-}
+} */
 
 
 @media(max-width:1200px){
