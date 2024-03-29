@@ -29,7 +29,12 @@ const Cart = ({ onCartVisibilityChange, cartVisiblity }) => {
     .reduce((total, item) => total + parseFloat(item.productPrice), 0)
     .toFixed(2);
 
+
   return (
+    <>
+    {/* <div className="backdrop" onClick={toggleVisibility}></div> */}
+    {/* <div className={`backdrop ${cartVisiblity ? "visible" : ""}`} onClick={toggleVisibility}></div> */}
+
     <div
       className={`cart-container ${cartVisiblity ? "visible" : "hidden"}`}
     >
@@ -84,8 +89,8 @@ const Cart = ({ onCartVisibilityChange, cartVisiblity }) => {
         </div>
         <div className="subtotal">
           <div className="subtotalDetails">
-            <h2>Subtotal:</h2>
-            <h2> ${totalPrice}</h2>
+            <h2 className="subtotalDetailsH2">Subtotal:</h2>
+            <h2 className="subtotalDetailsH2"> ${totalPrice}</h2>
           </div>
           <div className="checkoutButtonSection">
             <Link to='/checkout'><button  className="checkoutButton">Checkout</button></Link>
@@ -93,6 +98,10 @@ const Cart = ({ onCartVisibilityChange, cartVisiblity }) => {
         </div>
       </div>
     </div>
+
+    <div className={`test ${cartVisiblity ? "backdrop" : "backdropNotVisible"}`}></div>
+
+    </>
   );
 };
 

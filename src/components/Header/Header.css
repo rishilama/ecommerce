@@ -172,4 +172,14 @@ body{
   cursor: pointer;
 }
 
-/* Add any additional styles you need */
+
+.btnHeaderLink {
+  font-size: inherit; /* Inherit font size from parent */
+  border: none;
+  background-color: white;
+}
+
+.btnHeaderLink:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
