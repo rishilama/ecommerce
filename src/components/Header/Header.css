@@ -175,6 +175,7 @@ body{
 
 .btnHeaderLink {
   font-size: inherit; /* Inherit font size from parent */
+  color: inherit;
   border: none;
   background-color: white;
 }

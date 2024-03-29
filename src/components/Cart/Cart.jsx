@@ -18,9 +18,8 @@ const Cart = ({ username, onCartVisibilityChange, cartVisiblity }) => {
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
     localStorage.setItem(cartKey, JSON.stringify(updatedCartItems));
-    // eslint-disable-next-line
   };
-
+  
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
     initialCartItems.current = storedCartItems;
