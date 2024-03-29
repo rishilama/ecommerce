@@ -7,7 +7,7 @@ import { auth } from "../../components/test/auth";
 
 import styles from "./LoginPage.css";
 
-function Login() {
+function Login({ setUsername }) {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
@@ -27,7 +27,8 @@ function Login() {
     signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        
+        setUsername(values.email);
+        console.log(values.email)
         navigate("/");
       })
       .catch((err) => {
@@ -63,7 +64,7 @@ function Login() {
           <p>
             Already have an account?{" "}
             <span>
-              <Link to="/signup">Sign up</Link>
+              <Link to="/join">Sign up</Link>
             </span>
           </p>
         </div>

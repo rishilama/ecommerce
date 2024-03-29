@@ -8,14 +8,16 @@ import AlsoBought from "../../components/AlsoBought/AlsoBought";
 import Cart from "../../components/Cart/Cart"; // Import Cart component
 import SelectedProductFetcher from "../../components/test/selectedProductFetcher"
 
-function SingleProductPage() {
+function SingleProductPage({ username }) {
   const { productName } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [cartItems, setCartItems] = useState([]);
 
   const [cartVisiblity, setCartVisiblity] = useState(false);
 
+
   console.log(cartVisiblity)
+  console.log("name",username)
   const handleCartVisibilityChange = (isVisible) => {
     setCartVisiblity(isVisible);
   };
@@ -33,7 +35,7 @@ function SingleProductPage() {
   return (
     <div className="parent-container">
       {/* Render the Cart component */}
-      <Cart cartItems={cartItems}  onCartVisibilityChange={handleCartVisibilityChange} cartVisiblity={cartVisiblity} />
+      <Cart cartItems={cartItems}  onCartVisibilityChange={handleCartVisibilityChange} cartVisiblity={cartVisiblity} username={username} />
       <div className="single_product_page" id="top">
         <div className="single_product_page-left_section">
           <SingleProductLeftSection productDetails={productDetails} />
@@ -43,6 +45,7 @@ function SingleProductPage() {
             onCartVisibilityChange={handleCartVisibilityChange}
             cartVisiblity={cartVisiblity}
             productDetails={productDetails}
+            username={username}
             onAddToCart={addToCart} // Pass addToCart function to handle adding items to the cart
           />
         </div>

@@ -24,6 +24,9 @@ import Cart from './components/Cart/Cart';
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
+  const [username, setUsername] = useState("");
+
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -47,11 +50,13 @@ const App = () => {
   return (
     <div className="parent_container">
       <Router>
-        {isMobile ? <HamburgerHeader /> : <Header />}
+        {isMobile ? <HamburgerHeader username={username}  /> : <Header username={username}  />}
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/:productName" element={<SingleProductPage />} />
+          {/* <Route path="/:productName" element={<SingleProductPage />} /> */}
+          <Route path='/:productName' element={<SingleProductPage username={username} />} />
+        
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
           <Route path="/:gender/:category" element={<CategoryPage />} />
           <Route path="/:gender" element={<GenderPage />} />
@@ -59,8 +64,8 @@ const App = () => {
 
           <Route path="/new_arrivals" element={<NewArrivals />} />
 
-          <Route path='/join' element={<SignupPage />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/join' element={<SignupPage setUsername={setUsername} />} />
+          <Route path='/login' element={<Login setUsername={setUsername} />} />
           <Route path='/cart' element={<Cart />} />
 
 

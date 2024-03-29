@@ -8,7 +8,7 @@ import { auth } from "../../components/test/auth";
 
 import styles from "./SignupPage.css";
 
-function Signup() {
+function Signup({ setUsername }) {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
@@ -33,6 +33,7 @@ function Signup() {
         await updateProfile(user, {
           displayName: values.name,
         });
+        setUsername(values.email)
         navigate("/");
       })
       .catch((err) => {
