@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Hamburger-header.css'; // Create this CSS file
 import HamburgerDropdown from '../Hamburger-dropdown/Hamburger-dropdown';
 
-const HamburgerHeader = () => {
+const HamburgerHeader = ({username}) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
@@ -22,7 +22,7 @@ const HamburgerHeader = () => {
         <Link to="/"><img src="/images/Sh-Logo.png" alt="header-site-logo" className='header-site-logo' /></Link>
       </div>
       <div className="backdrop" onClick={toggleDropdown}></div>
-      {showDropdown && <HamburgerDropdown />}
+      {showDropdown && <HamburgerDropdown username={username} toggleDropdown={toggleDropdown} />}
     </div>
   );
 };

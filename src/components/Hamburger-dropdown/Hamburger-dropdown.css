@@ -1,0 +1,73 @@
+
+
+.hamburgerClosingIcon{
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 18px 38px;
+    /* margin: 18px */
+}
+
+.hamburgerClosingIcon__closeIcon{
+    font-size: 2.0rem;
+    font-weight: 500;
+}
+/* .dropdownFooter {
+    width: 50%;
+    position: fixed;
+    left: 0;
+    bottom: 0; 
+    padding: 28px 18px;
+
+  } */
+
+
+  .dropdownFooter {
+    position: absolute; 
+    margin-top: auto;
+    left: 0;
+    bottom: 0; 
+    width: 100%; 
+    padding: 0 28px 0 0;
+
+  }
+
+  .loginSection, .socialMediaSection{
+    display: flex;
+    align-items: center;
+  }
+  .loginSectionLInk{
+    display: flex;
+    flex-direction: row;
+  }
+/* 
+  @media(max-width:600px){
+    .dropdownFooter{
+      width: 70%;
+    }
+  } */
+  
+  .hamburgerDropdownUser{
+    font-size: 1.2rem;
+  }
+
+  .socialMediaSection{
+    margin-top: -8px;
+    justify-content: flex-end;
+    font-size: 1.5rem;
+
+    align-items: center;
+
+  }
+
+  .socialMediaSection__hamburgerDropdownIcon{
+    margin-left: -18px;
+  }
+
+  .socialMediaSection__hamburgerDropdownIcon:hover{
+    color: red
+  }
+
+  .loginText{
+    margin-left: 8px;
+  }

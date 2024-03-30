@@ -38,10 +38,11 @@
   } */
   
   .hamburgerdropdown{
+    /* padding: 18px 48px; */
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
     background-color: #333;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -49,6 +50,15 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.5s ease-in-out;
+
+    width: 50%;
+    height: 100vh;
+  }
+
+  @media(max-width:600px){
+    .hamburgerdropdown{
+      width: 70%;
+    }
   }
 
   .hamburgerdropdown a {
@@ -57,10 +67,10 @@
     text-decoration: none;
     display: block;
   }
-  
+/*   
   .hamburgerdropdown a:hover {
     background-color: #555;
-  }
+  } */
   
 
   
