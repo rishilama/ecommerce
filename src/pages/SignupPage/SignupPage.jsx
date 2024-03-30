@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 
-// import InputControl from "../InputControl/InputControl";
 import InputControl from "../../components/InputControl/InputControl";
 import { auth } from "../../components/test/auth";
 
@@ -28,13 +27,22 @@ function Signup({ setUsername }) {
     setSubmitButtonDisabled(true);
     createUserWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
-        setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, {
           displayName: values.name,
         });
-        setUsername(values.email)
-        navigate("/");
+
+        // Send email verification
+        sendEmailVerification(user)
+          .then(() => {
+            setSubmitButtonDisabled(false);
+            setUsername(values.email);
+            navigate("/email-verification"); // Redirect to a page indicating email verification is pending
+          })
+          .catch((err) => {
+            setSubmitButtonDisabled(false);
+            setErrorMsg(err.message);
+          });
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);

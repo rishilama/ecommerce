@@ -4,6 +4,8 @@ import './Header.css'; // Import the CSS file
 import Dropdown from '../Dropdown/Dropdown';
 import FirebaseDataFetcher from '../test/databaseTest'; // Import FirebaseDataFetcher
 import Cart from '../Cart/Cart';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Header = ({ username  }) => {
   const [fetchedData, setFetchedData] = useState([]);
@@ -33,7 +35,11 @@ const Header = ({ username  }) => {
           </div>
           <div className="right-section">
             <div className="sign-in">
-              {username ? <p>Welcome - {username}</p> : 
+              {username ? 
+                <Link to="/profile">
+                  <FontAwesomeIcon icon={faUser} className="user-icon headerUserIcon" /> 
+                </Link>
+              : 
               <Link className="header-link" to="/join">Become a sneakerhead</Link>
               }
             </div>

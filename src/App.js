@@ -1,31 +1,26 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged
+import { auth } from './components/test/auth'; // Import your Firebase auth instance
 import Header from './components/Header/Header';
 import HamburgerHeader from './components/Hamburger-header/Hamburger-header';
 import AllProductPage from './pages/All-Product-Page/AllProductPage';
 import HomePage from './pages/HomePage/HomePage';
 import'./App.css'
 import GenderPage from './pages/GenderPage/GenderPage';
-// import ProductSubmissionForm from './components/ProductSubmissionForm/ProductSubmissionForm';
-// import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 import ProductSubmissionPage from './pages/ProductSubmissionPage/ProductSubmissionPage';
-// import TestComponent from './components/test-comp';
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 import Footer from './components/Footer/Footer';
-// import CategoryPage from './pages/NewArrivals/NewArrivals';
 import NewArrivals from './pages/NewArrivals/NewArrivals';
 import CategoryPage from './pages/CategoryPage/CategoryPage';
 import SignupPage from './pages/SignupPage/SignupPage';
-import Login from './pages/LoginPage/LoginPage';
-import Cart from './components/Cart/Cart';
-
+import LoginPage from './pages/LoginPage/LoginPage';
+import EmailVerification from './components/EmailVerification/EmailVerification';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  const [username, setUsername] = useState("");
-
+  const [username, setUsername] = useState(null); // State to store the authenticated user
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,38 +34,32 @@ const App = () => {
     };
   }, []);
 
-  // const handleSubmit = (formData) => {
-  //   console.log("Form Data Submitted:", formData);
-  //   // Here you can handle the form submission logic, such as sending the data to Firebase.
-  // };
+  // Check user authentication state on component mount
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (username) => {
+      setUsername(username); // Update user state with the authenticated user
+    });
 
-
-
+    return unsubscribe; // Unsubscribe from the auth state change listener when the component unmounts
+  }, []);
 
   return (
     <div className="parent_container">
       <Router>
-        {isMobile ? <HamburgerHeader username={username}  /> : <Header username={username}  />}
+        {isMobile ? <HamburgerHeader username={username} /> : <Header username={username} />}
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/:productName" element={<SingleProductPage />} /> */}
           <Route path='/:productName' element={<SingleProductPage username={username} />} />
-        
           <Route path="/:gender/:category/:subcategory" element={<AllProductPage />} />
           <Route path="/:gender/:category" element={<CategoryPage />} />
           <Route path="/:gender" element={<GenderPage />} />
-          
-
           <Route path="/new_arrivals" element={<NewArrivals />} />
-
           <Route path='/join' element={<SignupPage setUsername={setUsername} />} />
-          <Route path='/login' element={<Login setUsername={setUsername} />} />
-          <Route path='/cart' element={<Cart />} />
-
-
-          <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage  />} />
-
+          <Route path='/login' element={<LoginPage setUsername={setUsername} />} />
+          <Route path='/email-verification' element={<EmailVerification />} />
+          <Route path='/profile' element={<ProfilePage />} />
+          <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage />} />
         </Routes>
 
         <Footer />

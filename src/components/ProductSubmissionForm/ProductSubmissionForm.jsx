@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./ProductSubmissionForm.css";
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get } from 'firebase/database';
+
 const firebaseConfig = {
-    apiKey: "AIzaSyA0a1HfRzT_IzmO0-qnzbybtgFT3aNVX7o",
-    authDomain: "products-list-50418.firebaseapp.com",
-    databaseURL: "https://products-list-50418-default-rtdb.firebaseio.com",
-    projectId: "products-list-50418",
-    storageBucket: "products-list-50418.appspot.com",
-    messagingSenderId: "327555328633",
-    appId: "1:327555328633:web:02fbbdf1948f7bb7f142a8",
-    measurementId: "G-SLF18NVH5W"
+  apiKey: "AIzaSyDBf3iw58MFYN365IEModwdbtZCLAhmgBA",
+  authDomain: "shopperssquare-sakura.firebaseapp.com",
+  databaseURL: "https://shopperssquare-sakura-default-rtdb.firebaseio.com/",
+  projectId: "shopperssquare-sakura",
+  storageBucket: "shopperssquare-sakura.appspot.com",
+  messagingSenderId: "231047880262",
+  appId: "1:231047880262:web:20f72ca54fb8f2f2847447",
+  measurementId: "G-ETDL9332ZR"
 };
+
+
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);

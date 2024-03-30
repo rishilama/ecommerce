@@ -11,10 +11,12 @@ function HeroSection() {
             </div>
             <div className="heroSection__child__rightSide">
                 <div className="rightSide__firstChild">
-                    <Link to="/men/sneaker"><img src="/images/hero11.jpg" alt="shoes" /></Link>
+                    <Link to="/men/sneaker" className='lgScreenHero'><img src="/images/hero11.jpg" alt="shoes" /></Link>
+                    <Link to="/men/sneaker" className='smScreenHero'><img src="/images/smallScreenShoe.jpg" alt="shoes" /></Link>
                 </div>
                 <div className="rightSide__secondChild">
-                    <Link to="/men/watches"><img src="/images/ass.jpg" alt="watches" /></Link>
+                    <Link to="/men/watches" className='lgScreenHero'><img src="/images/ass.jpg" alt="watches" /></Link>
+                    <Link to="/men/watches" className='smScreenHero'><img src="/images/smallScreenWatch.jpg" alt="watches" /></Link>
                 </div>
             </div>
         </div>
