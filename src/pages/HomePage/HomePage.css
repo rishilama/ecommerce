@@ -22,8 +22,7 @@
 
 @media(max-width:500px){
     .newArrivalsSection .similar-product__parentContainer{
-        background-color: blueviolet;
-        width: 112%;
+        width: 110%;
     }
 
     .similar-product-grid__prev-button{
