@@ -120,6 +120,8 @@ const HomePage = () => {
               <Cards
                 categoryProducts={similarProducts}
                 handleCardClick={handleCardClick}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
               />
             </div>
             <div className="similar-product-grid__next-button">

@@ -19,7 +19,7 @@ const NewArrivals = () => {
   };
 
   const reversedArray = reverseArrayById(categoryProducts);
-    console.log(reversedArray);
+    console.log("This is reversed",reversedArray);
 
     console.log(location)
   // console.log(category)

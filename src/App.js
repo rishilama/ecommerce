@@ -22,6 +22,8 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [username, setUsername] = useState(null); // State to store the authenticated user
 
+  console.log("App", username)
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -58,7 +60,7 @@ const App = () => {
           <Route path='/join' element={<SignupPage setUsername={setUsername} />} />
           <Route path='/login' element={<LoginPage setUsername={setUsername} />} />
           <Route path='/email-verification' element={<EmailVerification />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/profile' element={<ProfilePage username={username} setUsername={setUsername} />} />
           <Route path="/20shopperssquare17sakura03rishi09manila1999" element={<ProductSubmissionPage />} />
         </Routes>
 
